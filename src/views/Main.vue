@@ -39,13 +39,11 @@
     </v-row>
     <v-row>
       <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in list" :key="idx">
-        <v-card>
+        <v-card height="250px" class="card-outter">
           <v-card-title>
             <h4>{{ lesson.title }}</h4>
           </v-card-title>
-             {{ lesson.content }}
-          <v-card-actions>
-            <v-spacer></v-spacer>
+          <v-card-actions class="card-actions">
             <v-btn  color="blue" class="white--text" :content="lesson.content" :to="{ name: 'Lesson', params: { content: lesson.content } }">Read Lesson</v-btn>
           </v-card-actions>
         </v-card>
@@ -104,5 +102,13 @@ export default {
 </script>
 
 <style>
-
+.card-outter {
+  position: relative;
+  padding-bottom: 50px;
+}
+.card-actions {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 </style>
