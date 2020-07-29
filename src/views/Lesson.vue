@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height fluid>
+  <v-container fluid>
     <v-row v-if="url">
       <v-col class="google-slides-container">
         <p v-html="url"></p>

@@ -1,55 +1,82 @@
 <template>
-  <v-container fill-height fluid>
-    <v-overlay :value="lessonOverlay" absolute>
-      <v-card width="50vw">
-        <v-card-title>
-          <h4>Create Lesson</h4>
-        </v-card-title>
+  <v-container fluid>
+    <v-tabs>
+      <v-tabs-slider></v-tabs-slider>
+      <v-tab href="#lessons">Lessons</v-tab>
+      <v-tab href="#students">Students</v-tab>
 
-        <v-card-text>
-          <v-form>
-            <v-text-field label="Title" v-model="title"></v-text-field>
-            <v-text-field label="Url" v-model="url"></v-text-field>
+      <v-tab-item value="lessons">
+        <v-overlay :value="lessonOverlay" absolute>
+          <v-card width="50vw">
+            <v-card-title>
+              <h4>Create Lesson</h4>
+            </v-card-title>
 
-            <v-textarea label="Content" v-model="content"></v-textarea>
+            <v-card-text>
+              <v-form>
+                <v-text-field label="Title" v-model="title"></v-text-field>
+                <v-text-field label="Url" v-model="url"></v-text-field>
 
-          </v-form>
-        </v-card-text>
+                <v-textarea label="Content" v-model="content"></v-textarea>
 
-        <v-card-actions>
-          <v-btn @click="toggleOverlay">Cancel</v-btn>
+              </v-form>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-btn @click="toggleOverlay">Cancel</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn  color="blue" class="white--text" @click.prevent="addLesson">Create</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-overlay>
+
+        <v-row>
+          <v-col>
+            <h1>Lesson list</h1>
+          </v-col>
+
           <v-spacer></v-spacer>
-          <v-btn  color="blue" class="white--text" @click.prevent="addLesson">Create</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-overlay>
 
-    <v-row>
-      <v-col>
-        <h1>Lesson list</h1>
-      </v-col>
+          <v-col class="text-right">
+            <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Lesson</v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-divider></v-divider>
+        </v-row>
+        <v-row class="mt-2">
+          <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in list" :key="idx">
+            <v-card height="250px" class="card-outter">
+              <v-card-title>
+                <h4>{{ lesson.title }}</h4>
+              </v-card-title>
+              <v-card-actions class="card-actions">
+                <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { url: lesson.url, content: lesson.content } }">Read Lesson</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-tab-item>
 
-      <v-spacer></v-spacer>
+      <v-tab-item value="students">
+         <v-row>
+          <v-col>
+            <h1>Students list</h1>
+          </v-col>
 
-      <v-col class="text-right">
-        <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Lesson</v-btn>
-      </v-col>
-    </v-row>
-    <v-row class="my-0 py-0">
-      <v-divider></v-divider>
-    </v-row>
-    <v-row>
-      <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in list" :key="idx">
-        <v-card height="250px" class="card-outter">
-          <v-card-title>
-            <h4>{{ lesson.title }}</h4>
-          </v-card-title>
-          <v-card-actions class="card-actions">
-            <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { url: lesson.url, content: lesson.content } }">Read Lesson</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
+          <v-spacer></v-spacer>
+
+          <v-col class="text-right">
+            <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Student</v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-divider></v-divider>
+        </v-row>
+      </v-tab-item>
+    </v-tabs>
+
   </v-container>
 </template>
 
