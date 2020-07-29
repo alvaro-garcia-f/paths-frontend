@@ -15,3 +15,9 @@ export default {
   })
 }
 </script>
+
+<style>
+  #app {
+    color:#333;
+  }
+</style>
