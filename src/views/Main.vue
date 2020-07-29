@@ -30,8 +30,25 @@
 
       <v-spacer></v-spacer>
 
-      <v-col>
+      <v-col class="text-right">
         <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Lesson</v-btn>
+      </v-col>
+    </v-row>
+    <v-row class="my-0 py-0">
+      <v-divider></v-divider>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in list" :key="idx">
+        <v-card>
+          <v-card-title>
+            <h4>{{ lesson.title }}</h4>
+          </v-card-title>
+             {{ lesson.content }}
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn  color="blue" class="white--text" :content="lesson.content" :to="{ name: 'Lesson', params: { content: lesson.content } }">Read Lesson</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -44,10 +61,17 @@ export default {
   name: 'Main',
   data () {
     return {
+      list: [],
       lessonOverlay: false,
       title: '',
       content: ''
     }
+  },
+  mounted () {
+    Lessons
+      .getAllLessons()
+      .then(response => { this.list = response })
+      .catch(err => console.error(err))
   },
   methods: {
     toggleOverlay () {
@@ -59,7 +83,15 @@ export default {
 
       Lessons
         .createLesson(data)
-        .then(response => console.log(response))
+        .then(response => {
+          console.log(response)
+          Lessons
+            .getAllLessons()
+            .then(response => { this.list = response })
+            .catch(err => console.error(err))
+
+          this.toggleOverlay()
+        })
         .catch(err => console.error(err))
     }
   }
