@@ -67,6 +67,11 @@ export default {
       content: ''
     }
   },
+  computed: {
+    prepareContent () {
+      return this.content.split('<--')
+    }
+  },
   mounted () {
     Lessons
       .getAllLessons()
@@ -79,7 +84,7 @@ export default {
     },
 
     addLesson () {
-      const data = { title: this.title, content: this.content }
+      const data = { title: this.title, content: this.prepareContent }
 
       Lessons
         .createLesson(data)
