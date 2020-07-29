@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid>
     <v-overlay :value="lessonOverlay" absolute>
-      <v-card>
+      <v-card width="50vw">
         <v-card-title>
           <h4>Create Lesson</h4>
         </v-card-title>
@@ -63,7 +63,6 @@ export default {
         .catch(err => console.error(err))
     }
   }
-
 }
 </script>
 
