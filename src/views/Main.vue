@@ -9,6 +9,7 @@
         <v-card-text>
           <v-form>
             <v-text-field label="Title" v-model="title"></v-text-field>
+            <v-text-field label="Url" v-model="url"></v-text-field>
 
             <v-textarea label="Content" v-model="content"></v-textarea>
 
@@ -44,7 +45,7 @@
             <h4>{{ lesson.title }}</h4>
           </v-card-title>
           <v-card-actions class="card-actions">
-            <v-btn  color="blue" class="white--text" :content="lesson.content" :to="{ name: 'Lesson', params: { content: lesson.content } }">Read Lesson</v-btn>
+            <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { url: lesson.url, content: lesson.content } }">Read Lesson</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -62,6 +63,7 @@ export default {
       list: [],
       lessonOverlay: false,
       title: '',
+      url: '',
       content: ''
     }
   },
@@ -82,7 +84,11 @@ export default {
     },
 
     addLesson () {
-      const data = { title: this.title, content: this.prepareContent }
+      const data = {
+        title: this.title,
+        url: this.url,
+        content: this.prepareContent
+      }
 
       Lessons
         .createLesson(data)

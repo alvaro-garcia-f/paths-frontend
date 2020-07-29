@@ -22,7 +22,8 @@ const routes = [
     name: 'Lesson',
     component: Lesson,
     props: (route) => ({
-      content: route.params.content
+      content: route.params.content,
+      url: route.params.url
     })
   }
 ]
