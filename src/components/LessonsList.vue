@@ -1,5 +1,5 @@
 <template>
-  <container fluid>
+  <v-container fluid>
     <v-overlay :value="lessonOverlay" absolute>
       <v-card width="50vw">
         <v-card-title>
@@ -50,7 +50,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </container>
+  </v-container>
 </template>
 
 <script>

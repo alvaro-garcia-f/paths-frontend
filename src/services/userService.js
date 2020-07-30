@@ -19,5 +19,11 @@ export default {
   async addStudent (data) {
     const response = await API.post('/users/student', data, { headers: { token: localStorage.getItem('token') } })
     return response.data
+  },
+
+  async deleteStudent (id) {
+    console.log(id)
+    const response = await API.delete(`/users/student/${id}`, { headers: { token: localStorage.getItem('token') } })
+    return response.data
   }
 }

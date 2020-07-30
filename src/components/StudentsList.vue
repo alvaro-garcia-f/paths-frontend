@@ -1,5 +1,5 @@
 <template>
-  <container fluid>
+  <v-container fluid>
     <v-overlay :value="studentOverlay" absolute>
       <v-card width="50vw">
         <v-card-title>
@@ -49,7 +49,7 @@
                 mdi-pencil
               </v-icon>
 
-              <v-icon small @click="deleteItem(item)">
+              <v-icon small @click="removeStudent(item)">
                 mdi-delete
               </v-icon>
              </div>
@@ -58,7 +58,7 @@
         </v-data-table>
       </v-col>
     </v-row>
-  </container>
+  </v-container>
 </template>
 
 <script>
@@ -88,6 +88,13 @@ export default {
       this.studentOverlay = !this.studentOverlay
     },
 
+    getAllStudents () {
+      Users
+        .getAllStudents()
+        .then(response => { this.studentList = response })
+        .catch(err => console.error(err))
+    },
+
     addStudent () {
       const data = {
         name: this.name,
@@ -99,21 +106,23 @@ export default {
         .addStudent(data)
         .then(response => {
           console.log(response)
-
-          Users
-            .getAllStudents()
-            .then(response => { this.studentList = response })
-            .catch(err => console.error(err))
-
+          this.getAllStudents()
           this.toggleOverlay()
         })
+    },
+
+    removeStudent (student) {
+      Users
+        .deleteStudent(student._id)
+        .then(response => {
+          console.log(response)
+          this.getAllStudents()
+        })
+        .catch(err => console.error(err))
     }
   },
   mounted () {
-    Users
-      .getAllStudents()
-      .then(response => { this.studentList = response })
-      .catch(err => console.error(err))
+    this.getAllStudents()
   }
 }
 </script>
