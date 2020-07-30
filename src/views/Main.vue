@@ -10,7 +10,7 @@
       </v-tab-item>
 
       <v-tab-item value="students">
-         <v-row>
+        <!-- <v-row>
           <v-col>
             <h1>Students list</h1>
           </v-col>
@@ -42,7 +42,8 @@
               </template>
             </v-data-table>
           </v-col>
-        </v-row>
+        </v-row> -->
+        <StudentsList></StudentsList>
       </v-tab-item>
     </v-tabs>
 
@@ -50,41 +51,14 @@
 </template>
 
 <script>
-import Users from '@/services/userService'
 import LessonsList from '@/components/LessonsList.vue'
+import StudentsList from '@/components/StudentsList.vue'
 
 export default {
   name: 'Main',
-  data () {
-    return {
-      headers: [
-        {
-          text: 'Student',
-          align: 'start',
-          value: 'name'
-        },
-        { text: 'E-mail', value: 'email' },
-        { text: 'Actions', value: 'actions' }
-      ],
-      studentList: []
-    }
-  },
   components: {
-    LessonsList
-  },
-  computed: {
-    prepareContent () {
-      return this.content.split('<--')
-    }
-  },
-  mounted () {
-    Users
-      .getAllStudents()
-      .then(response => { this.studentList = response })
-      .catch(err => console.error(err))
-  },
-  methods: {
-
+    LessonsList,
+    StudentsList
   }
 }
 </script>

@@ -16,7 +16,7 @@
       </v-col>
     </v-row>
 
-    <v-carousel hide-delimiters :continuous=false v-else>
+    <v-carousel class="mt-2" hide-delimiters :continuous=false v-else>
       <v-carousel-item v-for="(slide, idx) in lesson.content" :key="idx">
         <v-card height="100%">
           <v-card-title>
