@@ -50,7 +50,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-col class="text-right">
+      <v-col class="text-right" v-if="teacher">
         <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Student</v-btn>
       </v-col>
     </v-row>
@@ -103,7 +103,8 @@ export default {
       id: '',
       name: '',
       email: '',
-      password: ''
+      password: '',
+      teacher: localStorage.getItem('role') === 'teacher'
     }
   },
   methods: {

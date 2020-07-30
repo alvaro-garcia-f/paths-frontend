@@ -3,7 +3,7 @@
     <v-tabs>
       <v-tabs-slider></v-tabs-slider>
       <v-tab href="#lessons">Lessons</v-tab>
-      <v-tab href="#students">Students</v-tab>
+      <v-tab href="#students" v-if="teacher">Students</v-tab>
 
       <v-tab-item value="lessons">
         <LessonsList></LessonsList>
@@ -23,6 +23,11 @@ import StudentsList from '@/components/StudentsList.vue'
 
 export default {
   name: 'Main',
+  data () {
+    return {
+      teacher: localStorage.getItem('role') === 'teacher'
+    }
+  },
   components: {
     LessonsList,
     StudentsList

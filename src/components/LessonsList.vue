@@ -30,7 +30,7 @@
       <v-spacer></v-spacer>
 
       <v-col class="text-right">
-        <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Lesson</v-btn>
+        <v-btn color="blue" class="white--text" @click="toggleOverlay" v-if="teacher">Add Lesson</v-btn>
       </v-col>
     </v-row>
 
@@ -64,7 +64,8 @@ export default {
       lessonOverlay: false,
       title: '',
       url: '',
-      content: ''
+      content: '',
+      teacher: localStorage.getItem('role') === 'teacher'
     }
   },
   computed: {
