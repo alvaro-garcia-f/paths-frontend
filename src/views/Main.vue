@@ -45,7 +45,7 @@
           <v-divider></v-divider>
         </v-row>
         <v-row class="mt-2">
-          <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in list" :key="idx">
+          <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in lessonList" :key="idx">
             <v-card height="250px" class="card-outter">
               <v-card-title>
                 <h4>{{ lesson.title }}</h4>
@@ -74,6 +74,24 @@
         <v-row>
           <v-divider></v-divider>
         </v-row>
+
+        <v-row class="mt-2">
+          <v-col>
+            <v-data-table :headers="headers" :items="studentList"
+              hide-default-header hide-default-footer class="elevation-1">
+               <template v-slot:item.actions="{ item }">
+                 <div class="text-right">
+                  <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-pencil
+                  </v-icon>
+                  <v-icon small @click="deleteItem(item)">
+                    mdi-delete
+                  </v-icon>
+                 </div>
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
       </v-tab-item>
     </v-tabs>
 
@@ -82,12 +100,23 @@
 
 <script>
 import Lessons from '@/services/lessonService'
+import Users from '@/services/userService'
 
 export default {
   name: 'Main',
   data () {
     return {
-      list: [],
+      lessonList: [],
+      headers: [
+        {
+          text: 'Student',
+          align: 'start',
+          value: 'name'
+        },
+        { text: 'E-mail', value: 'email' },
+        { text: 'Actions', value: 'actions' }
+      ],
+      studentList: [],
       lessonOverlay: false,
       title: '',
       url: '',
@@ -102,7 +131,12 @@ export default {
   mounted () {
     Lessons
       .getAllLessons()
-      .then(response => { this.list = response })
+      .then(response => { this.lessonList = response })
+      .catch(err => console.error(err))
+
+    Users
+      .getAllStudents()
+      .then(response => { this.studentList = response })
       .catch(err => console.error(err))
   },
   methods: {
@@ -123,7 +157,7 @@ export default {
           console.log(response)
           Lessons
             .getAllLessons()
-            .then(response => { this.list = response })
+            .then(response => { this.lessonList = response })
             .catch(err => console.error(err))
 
           this.toggleOverlay()
