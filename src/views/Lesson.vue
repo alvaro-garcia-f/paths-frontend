@@ -1,6 +1,11 @@
 <template>
   <v-container fluid>
-    <v-row>
+    <v-row class="align-center">
+      <v-col cols="1" class="text-right">
+        <router-link style="text-decoration: none" to="/main">
+          <v-icon>mdi-arrow-left</v-icon>
+        </router-link>
+      </v-col>
       <v-col>
         <h1>{{ lesson.title }}</h1>
       </v-col>
