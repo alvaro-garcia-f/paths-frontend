@@ -66,6 +66,7 @@ export default {
           else {
             localStorage.setItem('token', response.token)
             localStorage.setItem('email', response.email)
+            localStorage.setItem('role', response.role)
             this.$router.push({ path: '/main' })
           }
         })
