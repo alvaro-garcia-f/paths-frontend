@@ -41,17 +41,20 @@
             <v-btn color="blue" class="white--text" @click="toggleOverlay">Add Lesson</v-btn>
           </v-col>
         </v-row>
+
         <v-row>
           <v-divider></v-divider>
         </v-row>
+
         <v-row class="mt-2">
           <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in lessonList" :key="idx">
             <v-card height="250px" class="card-outter">
               <v-card-title>
                 <h4>{{ lesson.title }}</h4>
               </v-card-title>
+
               <v-card-actions class="card-actions">
-                <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { url: lesson.url, content: lesson.content } }">Read Lesson</v-btn>
+                <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { id: lesson._id } }">Read Lesson</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>

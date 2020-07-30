@@ -18,12 +18,11 @@ const routes = [
     component: Main
   },
   {
-    path: '/lesson/:content',
+    path: '/lesson/:id',
     name: 'Lesson',
     component: Lesson,
     props: (route) => ({
-      content: route.params.content,
-      url: route.params.url
+      id: route.params.id
     })
   }
 ]

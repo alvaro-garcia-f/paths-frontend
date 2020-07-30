@@ -1,17 +1,28 @@
 <template>
   <v-container fluid>
-    <v-row v-if="url">
+    <v-row>
+      <v-col>
+        <h1>{{ lesson.title }}</h1>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-divider></v-divider>
+    </v-row>
+
+    <v-row class="mt-2" v-if="lesson.url">
       <v-col class="google-slides-container">
-        <p v-html="url"></p>
+        <p v-html="lesson.url"></p>
       </v-col>
     </v-row>
 
     <v-carousel hide-delimiters :continuous=false v-else>
-      <v-carousel-item v-for="(slide, idx) in content" :key="idx">
+      <v-carousel-item v-for="(slide, idx) in lesson.content" :key="idx">
         <v-card height="100%">
           <v-card-title>
             <h4>{{ getTitle (slide) }}</h4>
           </v-card-title>
+
           <v-card-text>
             <p>{{ getContent (slide) }}</p>
           </v-card-text>
@@ -22,11 +33,17 @@
 </template>
 
 <script>
+import Lessons from '@/services/lessonService'
+
 export default {
   name: 'Lesson',
+  data () {
+    return {
+      lesson: {}
+    }
+  },
   props: {
-    url: String,
-    content: Array
+    id: String
   },
   methods: {
     getTitle (slide) {
@@ -38,8 +55,10 @@ export default {
     }
   },
   mounted () {
-    console.log('content', this.content)
-    console.log('url', this.url)
+    Lessons
+      .getLesson(this.id)
+      .then(response => { this.lesson = response })
+      .catch(err => console.error(err))
   }
 }
 </script>
