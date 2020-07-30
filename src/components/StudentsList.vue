@@ -1,5 +1,27 @@
 <template>
   <container fluid>
+    <v-overlay :value="studentOverlay" absolute>
+      <v-card width="50vw">
+        <v-card-title>
+          <h4>Add Student</h4>
+        </v-card-title>
+
+        <v-card-text>
+          <v-form>
+            <v-text-field label="Name" v-model="name"></v-text-field>
+            <v-text-field label="E-mail" v-model="email"></v-text-field>
+            <v-text-field label="Password" v-model="password"></v-text-field>
+          </v-form>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn @click="toggleOverlay">Cancel</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn  color="blue" class="white--text" @click.prevent="addStudent">Add</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
+
     <v-row>
       <v-col>
         <h1>Students list</h1>
@@ -54,7 +76,37 @@ export default {
         { text: 'E-mail', value: 'email' },
         { text: 'Actions', value: 'actions' }
       ],
-      studentList: []
+      studentList: [],
+      studentOverlay: false,
+      name: '',
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    toggleOverlay () {
+      this.studentOverlay = !this.studentOverlay
+    },
+
+    addStudent () {
+      const data = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }
+
+      Users
+        .addStudent(data)
+        .then(response => {
+          console.log(response)
+
+          Users
+            .getAllStudents()
+            .then(response => { this.studentList = response })
+            .catch(err => console.error(err))
+
+          this.toggleOverlay()
+        })
     }
   },
   mounted () {

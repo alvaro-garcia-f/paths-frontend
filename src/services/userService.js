@@ -14,5 +14,10 @@ export default {
   async getAllStudents () {
     const response = await API.get('/users/students', { headers: { token: localStorage.getItem('token') } })
     return response.data
+  },
+
+  async addStudent (data) {
+    const response = await API.post('/users/student', data, { headers: { token: localStorage.getItem('token') } })
+    return response.data
   }
 }
