@@ -45,6 +45,7 @@
             <h4>{{ lesson.title }}</h4>
           </v-card-title>
           <v-card-actions class="card-actions">
+            <v-btn  color="blue" class="white--text" :to="{ name: 'Quiz', params: { id: lesson._id } }">Quiz</v-btn>
             <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { id: lesson._id } }">Read Lesson</v-btn>
           </v-card-actions>
         </v-card>
@@ -57,7 +58,7 @@
 import Lessons from '@/services/lessonService'
 
 export default {
-  name: 'Main',
+  name: 'LessonsList',
   data () {
     return {
       lessonList: [],
@@ -74,14 +75,18 @@ export default {
     }
   },
   mounted () {
-    Lessons
-      .getAllLessons()
-      .then(response => { this.lessonList = response })
-      .catch(err => console.error(err))
+    this.getAllLessons()
   },
   methods: {
     toggleOverlay () {
       this.lessonOverlay = !this.lessonOverlay
+    },
+
+    getAllLessons () {
+      Lessons
+        .getAllLessons()
+        .then(response => { this.lessonList = response })
+        .catch(err => console.error(err))
     },
 
     addLesson () {
@@ -94,12 +99,7 @@ export default {
       Lessons
         .createLesson(data)
         .then(response => {
-          console.log(response)
-          Lessons
-            .getAllLessons()
-            .then(response => { this.lessonList = response })
-            .catch(err => console.error(err))
-
+          this.getAllLessons()
           this.toggleOverlay()
         })
         .catch(err => console.error(err))

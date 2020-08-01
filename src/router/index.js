@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Main from '../views/Main.vue'
 import Lesson from '../views/Lesson.vue'
+import Quiz from '../views/Quiz.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,14 @@ const routes = [
     path: '/lesson/:id',
     name: 'Lesson',
     component: Lesson,
+    props: (route) => ({
+      id: route.params.id
+    })
+  },
+  {
+    path: '/lesson/:id/quiz',
+    name: 'Quiz',
+    component: Quiz,
     props: (route) => ({
       id: route.params.id
     })

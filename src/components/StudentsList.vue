@@ -86,6 +86,7 @@
 import Users from '@/services/userService'
 
 export default {
+  name: 'StudentsList',
   data () {
     return {
       headers: [
