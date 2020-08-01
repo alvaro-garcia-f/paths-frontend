@@ -15,40 +15,46 @@
       <v-divider></v-divider>
     </v-row>
 
-    <v-row class="mt-2">
+    <v-row fill-height class="align-center" v-if="quizDone()">
+      <v-col class="text-center">
+        <h2>Well done! You have completed the quiz!</h2>
+        <h4> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h4>
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-2" v-else>
       <v-col cols="12">
         <v-card>
-          <v-card-text>
-            <h3>{{ questionsList[question].question }}</h3>
-            {{ questionsList }}
+          <v-card-text class="text-center">
+            <h2>{{ questionsList[currentQuestion].question }}</h2>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card>
-          <v-card-text>
-            <h3>{{ questionsList[question].options.a }}</h3>
+        <v-card @click="answerQuestion('a')">
+          <v-card-text class="text-center">
+            <h3>{{ questionsList[currentQuestion].options.a }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card>
-          <v-card-text>
-            <h3>{{ questionsList[question].options.b }}</h3>
+        <v-card @click="answerQuestion('b')">
+          <v-card-text class="text-center">
+            <h3>{{ questionsList[currentQuestion].options.b }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card>
-          <v-card-text>
-            <h3>{{ questionsList[question].options.c }}</h3>
+        <v-card @click="answerQuestion('c')">
+          <v-card-text class="text-center">
+            <h3>{{ questionsList[currentQuestion].options.c }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card>
-          <v-card-text>
-            <h3>{{ questionsList[question].options.d }}</h3>
+        <v-card @click="answerQuestion('d')">
+          <v-card-text class="text-center">
+            <h3>{{ questionsList[currentQuestion].options.d }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
@@ -64,11 +70,34 @@ export default {
   data () {
     return {
       questionsList: [],
-      question: 0
+      currentQuestion: 0,
+      correctAnswers: 0
     }
   },
   props: {
     id: String
+  },
+
+  methods: {
+    answerQuestion (answer) {
+      if (answer === this.questionsList[this.currentQuestion].answer) {
+        alert('Correct!')
+        this.correctAnswers++
+      } else {
+        alert(`Wrong! Correct answer is: ${this.questionsList[this.currentQuestion].answer}`)
+      }
+      this.nextQuestion()
+    },
+
+    nextQuestion () {
+      if (!this.quizDone()) {
+        this.currentQuestion++
+      }
+    },
+
+    quizDone () {
+      return this.currentQuestion === this.questionsList.length
+    }
   },
   mounted () {
     Lessons
