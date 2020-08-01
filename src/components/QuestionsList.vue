@@ -4,7 +4,6 @@
       <v-card width="50vw">
         <v-card-title>
           <h4>Add Question</h4>
-          {{ id }}
         </v-card-title>
 
         <v-card-text>
@@ -51,7 +50,12 @@
       </v-card>
     </v-overlay>
 
-    <v-row>
+    <v-row class="align-center">
+      <v-col cols="1" class="text-right">
+        <router-link style="text-decoration: none" to="/main">
+          <v-icon>mdi-arrow-left</v-icon>
+        </router-link>
+      </v-col>
       <v-col>
         <h1>Question list</h1>
       </v-col>
@@ -102,7 +106,8 @@ export default {
           text: 'Question',
           align: 'start',
           value: 'question'
-        }
+        },
+        { text: 'Actions', value: 'actions' }
       ],
       questionList: [],
       questionOverlay: false,
