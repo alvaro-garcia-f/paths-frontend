@@ -26,14 +26,15 @@
       </v-card>
     </v-overlay>
 
-    <v-row>
+    <v-row class="align-center">
       <v-col cols="12">
         <h1>Welcome to Paths</h1>
+        <h3>Learn your own way</h3>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-          <v-btn color="blue" class="white--text" @click="toggleOverlay">Start</v-btn>
+          <v-btn color="blue darken-2" class="white--text" @click="toggleOverlay">Start</v-btn>
       </v-col>
     </v-row>
   </v-container>

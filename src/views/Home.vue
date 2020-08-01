@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <v-container class="home" fill-height fluid>
     <HomePage />
-  </div>
+  </v-container>
 </template>
 
 <script>

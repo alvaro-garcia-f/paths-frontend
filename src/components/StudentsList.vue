@@ -45,7 +45,7 @@
 
     <v-row>
       <v-col>
-        <h1>Students list</h1>
+        <h1>Students</h1>
       </v-col>
 
       <v-spacer></v-spacer>
