@@ -9,11 +9,11 @@
         <v-card-text>
           <v-form>
             <v-text-field label="Question" v-model="question"></v-text-field>
-            <v-text-field label="Answer" v-model="answer"></v-text-field>
             <v-text-field label="Option A" v-model="optionA"></v-text-field>
             <v-text-field label="Option B" v-model="optionB"></v-text-field>
             <v-text-field label="Option C" v-model="optionC"></v-text-field>
             <v-text-field label="Option D" v-model="optionD"></v-text-field>
+            <v-select v-model="answer" :items="answerOptions" label="Correct answer"></v-select>
           </v-form>
         </v-card-text>
 
@@ -34,11 +34,11 @@
         <v-card-text>
           <v-form>
             <v-text-field label="Question" v-model="question"></v-text-field>
-            <v-text-field label="Answer" v-model="answer"></v-text-field>
             <v-text-field label="Option A" v-model="optionA"></v-text-field>
             <v-text-field label="Option B" v-model="optionB"></v-text-field>
             <v-text-field label="Option C" v-model="optionC"></v-text-field>
             <v-text-field label="Option D" v-model="optionD"></v-text-field>
+            <v-select v-model="answer" :items="answerOptions" label="Correct answer"></v-select>
           </v-form>
         </v-card-text>
 
@@ -114,11 +114,12 @@ export default {
       editQuestionOverlay: false,
       questionId: '',
       question: '',
-      answer: '',
       optionA: '',
       optionB: '',
       optionC: '',
       optionD: '',
+      answer: '',
+      answerOptions: ['a', 'b', 'c', 'd'],
       teacher: localStorage.getItem('role') === 'teacher'
     }
   },

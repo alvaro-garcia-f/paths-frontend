@@ -31,30 +31,30 @@
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card @click="answerQuestion('a')">
-          <v-card-text class="text-center">
-            <h3>{{ questionsList[currentQuestion].options.a }}</h3>
+        <v-card color="blue darken-2" @click="answerQuestion('a')">
+          <v-card-text class="text-center white--text">
+            <h3>a. {{ questionsList[currentQuestion].options.a }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card @click="answerQuestion('b')">
-          <v-card-text class="text-center">
-            <h3>{{ questionsList[currentQuestion].options.b }}</h3>
+        <v-card color="yellow darken-2" @click="answerQuestion('b')">
+          <v-card-text class="text-center white--text">
+            <h3>b. {{ questionsList[currentQuestion].options.b }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card @click="answerQuestion('c')">
-          <v-card-text class="text-center">
-            <h3>{{ questionsList[currentQuestion].options.c }}</h3>
+        <v-card color="red darken-2" @click="answerQuestion('c')">
+          <v-card-text class="text-center white--text">
+            <h3>c. {{ questionsList[currentQuestion].options.c }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card @click="answerQuestion('d')">
-          <v-card-text class="text-center">
-            <h3>{{ questionsList[currentQuestion].options.d }}</h3>
+        <v-card color="green darken-2" @click="answerQuestion('d')">
+          <v-card-text class="text-center white--text">
+            <h3>d. {{ questionsList[currentQuestion].options.d }}</h3>
           </v-card-text>
         </v-card>
       </v-col>
