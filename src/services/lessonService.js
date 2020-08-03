@@ -1,7 +1,7 @@
 import axios from 'axios'
-
+console.log(process.env)
 const API = axios.create({
-  baseURL: 'http://localhost:3000/api/lessons',
+  baseURL: `${process.env.VUE_APP_API}/lessons`,
   timeout: 1000
 })
 
