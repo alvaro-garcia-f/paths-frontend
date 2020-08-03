@@ -29,7 +29,7 @@
     <v-row class="mt-2" v-else>
 
       <v-dialog  width="50vw" :value="correct" absolute @click:outside="nextQuestion()">
-        <v-card height="30vh" class="success card-outter">
+        <v-card height="50vh" class="success card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
             <h2> That's correct!</h2>
           </v-card-text>
@@ -37,7 +37,7 @@
       </v-dialog>
 
       <v-dialog  width="50vw" :value="wrong" absolute @click:outside="nextQuestion()">
-        <v-card height="30vh" class="warning card-outter">
+        <v-card height="50vh" class="warning card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
             <h2> I'm sorry but that is wrong</h2><br/>
             <h3>The correct answer is {{ questionsList[currentQuestion].answer }}</h3>

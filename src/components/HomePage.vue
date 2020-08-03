@@ -1,7 +1,7 @@
 <template>
   <v-container  class="text-center" fill-height fluid>
 
-    <v-dialog  width="50vw" :value="logInOverlay" absolute>
+    <v-dialog width="500px" :value="logInOverlay" absolute>
       <v-card>
         <v-card-title>
           <h4>Begin your journey</h4>
@@ -27,11 +27,12 @@
     </v-dialog>
 
     <v-row class="align-center">
-      <v-col cols="12">
-        <h1>Welcome to Paths</h1>
-        <h3>Learn your own way</h3>
-      </v-col>
+        <v-col cols="12">
+          <h1>Welcome to Paths</h1>
+          <h3>Learn your own way</h3>
+        </v-col>
     </v-row>
+    <v-img height="55vh" src="../assets/home.svg" contain position="bottom" class="d-lg" />
     <v-row>
       <v-col>
           <v-btn color="blue darken-2" class="white--text" @click="toggleOverlay">Start</v-btn>

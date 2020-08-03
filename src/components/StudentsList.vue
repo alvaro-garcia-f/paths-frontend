@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-dialog width="50vw" :value="studentOverlay" absolute>
+    <v-dialog width="500px" :value="studentOverlay" absolute>
       <v-card>
         <v-card-title>
           <h4>Add Student</h4>
@@ -22,7 +22,7 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog width="50vw" :value="editStudentOverlay" absolute>
+    <v-dialog width="500px" :value="editStudentOverlay" absolute>
       <v-card>
         <v-card-title>
           <h4>Edit Student</h4>
