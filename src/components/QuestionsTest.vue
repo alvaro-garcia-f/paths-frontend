@@ -7,7 +7,7 @@
         </router-link>
       </v-col>
       <v-col>
-        <h1>Student Quiz</h1>
+        <h1>Student Quiz</h1>{{right}}
       </v-col>
     </v-row>
 
@@ -19,14 +19,32 @@
       <v-col>
         <v-card height="60vh" class="success card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
-            <h2>Well done! You have completed the quiz!</h2>
-            <h4> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h4>
+            <h1>Well done! You have completed the quiz!</h1><br/>
+            <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
 
     <v-row class="mt-2" v-else>
+
+      <v-dialog  width="50vw" :value="correct" absolute @click:outside="nextQuestion()">
+        <v-card height="30vh" class="success card-outter">
+          <v-card-text height="100%" class="text-center white--text card-text">
+            <h2> That's correct!</h2>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog  width="50vw" :value="wrong" absolute @click:outside="nextQuestion()">
+        <v-card height="30vh" class="warning card-outter">
+          <v-card-text height="100%" class="text-center white--text card-text">
+            <h2> I'm sorry but that is wrong</h2><br/>
+            <h3>The correct answer is {{ questionsList[currentQuestion].answer }}</h3>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
       <v-col cols="12">
         <v-card class="py-6 question">
           <v-card-text class="text-center">
@@ -83,7 +101,9 @@ export default {
     return {
       questionsList: [],
       currentQuestion: 0,
-      correctAnswers: 0
+      correctAnswers: 0,
+      correct: false,
+      wrong: false
     }
   },
   props: {
@@ -93,15 +113,16 @@ export default {
   methods: {
     answerQuestion (answer) {
       if (answer === this.questionsList[this.currentQuestion].answer) {
-        alert('Correct!')
+        this.correct = true
         this.correctAnswers++
       } else {
-        alert(`Wrong! Correct answer is: ${this.questionsList[this.currentQuestion].answer}`)
+        this.wrong = true
       }
-      this.nextQuestion()
     },
 
     nextQuestion () {
+      this.correct = false
+      this.wrong = false
       if (!this.quizDone()) {
         this.currentQuestion++
       }
