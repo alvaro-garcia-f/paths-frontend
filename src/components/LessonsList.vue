@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
-    <v-overlay :value="lessonOverlay" absolute>
-      <v-card width="50vw">
+    <v-dialog  width="50vw" :value="lessonOverlay" absolute>
+      <v-card>
         <v-card-title>
           <h4>Create Lesson</h4>
         </v-card-title>
@@ -20,7 +20,7 @@
           <v-btn  color="blue" class="white--text" @click.prevent="addLesson">Create</v-btn>
         </v-card-actions>
       </v-card>
-    </v-overlay>
+    </v-dialog>
 
     <v-row>
       <v-col>
@@ -108,7 +108,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .card-outter {
   position: relative;
   padding-bottom: 50px;

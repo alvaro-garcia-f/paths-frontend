@@ -1,7 +1,7 @@
 <template>
   <v-container  class="text-center" fill-height fluid>
 
-    <v-overlay :value="logInOverlay" absolute>
+    <v-dialog  width="50vw" :value="logInOverlay" absolute>
       <v-card>
         <v-card-title>
           <h4>Begin your journey</h4>
@@ -24,7 +24,7 @@
           <v-btn  color="blue" class="white--text" @click.prevent="userLogIn">Start</v-btn>
         </v-card-actions>
       </v-card>
-    </v-overlay>
+    </v-dialog>
 
     <v-row class="align-center">
       <v-col cols="12">

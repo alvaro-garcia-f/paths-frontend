@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
-    <v-overlay :value="questionOverlay" absolute>
-      <v-card width="50vw">
+    <v-dialog width="50vw" :value="questionOverlay" absolute>
+      <v-card>
         <v-card-title>
           <h4>Add Question</h4>
         </v-card-title>
@@ -23,10 +23,10 @@
           <v-btn  color="blue" class="white--text" @click.prevent="addQuestion">Add</v-btn>
         </v-card-actions>
       </v-card>
-    </v-overlay>
+    </v-dialog>
 
-    <v-overlay :value="editQuestionOverlay" absolute>
-      <v-card width="50vw">
+    <v-dialog width="50vw" :value="editQuestionOverlay" absolute>
+      <v-card>
         <v-card-title>
           <h4>Edit Question</h4>
         </v-card-title>
@@ -48,7 +48,7 @@
           <v-btn  color="blue" class="white--text" @click.prevent="editStudent">Save</v-btn>
         </v-card-actions>
       </v-card>
-    </v-overlay>
+    </v-dialog>
 
     <v-row class="align-center">
       <v-col cols="1" class="text-right">
