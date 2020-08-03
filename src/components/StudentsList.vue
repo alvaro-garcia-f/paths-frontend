@@ -172,7 +172,6 @@ export default {
       Users
         .deleteStudent(student._id)
         .then(response => {
-          console.log(response)
           this.getAllStudents()
         })
         .catch(err => console.error(err))
