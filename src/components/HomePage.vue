@@ -32,7 +32,7 @@
           <h3>Learn your own way</h3>
         </v-col>
     </v-row>
-    <v-img height="55vh" src="../assets/home.svg" contain position="bottom" class="d-lg" />
+    <v-img height="55vh" src="../assets/home.svg" contain position="bottom" />
     <v-row>
       <v-col>
           <v-btn color="blue darken-2" class="white--text" @click="toggleOverlay">Start</v-btn>
