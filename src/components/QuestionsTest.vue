@@ -7,7 +7,7 @@
         </router-link>
       </v-col>
       <v-col>
-        <h1>Student Quiz</h1>{{right}}
+        <h1>Quiz</h1>
       </v-col>
     </v-row>
 
@@ -56,7 +56,7 @@
         <v-hover v-slot:default="{ hover }">
           <v-card :elevation="hover ? 10 : 2" color="py-4 blue darken-2" @click="answerQuestion('a')">
             <v-card-text class="text-center white--text">
-              <h3>a. {{ questionsList[currentQuestion].options.a }}</h3>
+              <h3>a. {{ questionsList[currentQuestion].option_a }}</h3>
             </v-card-text>
           </v-card>
         </v-hover>
@@ -65,7 +65,7 @@
         <v-hover v-slot:default="{ hover }">
           <v-card :elevation="hover ? 10 : 2" color="py-4 yellow darken-2" @click="answerQuestion('b')">
             <v-card-text class="text-center white--text">
-              <h3>b. {{ questionsList[currentQuestion].options.b }}</h3>
+              <h3>b. {{ questionsList[currentQuestion].option_b }}</h3>
             </v-card-text>
           </v-card>
         </v-hover>
@@ -74,7 +74,7 @@
         <v-hover v-slot:default="{ hover }">
           <v-card :elevation="hover ? 10 : 2" color="py-4 red darken-2" @click="answerQuestion('c')">
             <v-card-text class="text-center white--text">
-              <h3>c. {{ questionsList[currentQuestion].options.c }}</h3>
+              <h3>c. {{ questionsList[currentQuestion].option_c }}</h3>
             </v-card-text>
           </v-card>
         </v-hover>
@@ -83,7 +83,7 @@
         <v-hover v-slot:default="{ hover }">
           <v-card :elevation="hover ? 10 : 2" color="py-4 green darken-2" @click="answerQuestion('d')">
             <v-card-text class="text-center white--text">
-              <h3>d. {{ questionsList[currentQuestion].options.d }}</h3>
+              <h3>d. {{ questionsList[currentQuestion].option_d }}</h3>
             </v-card-text>
           </v-card>
         </v-hover>
@@ -93,7 +93,8 @@
 </template>
 
 <script>
-import Lessons from '@/services/lessonService'
+// import Lessons from '@/services/lessonService'
+import Questions from '@/services/questionService'
 
 export default {
   name: 'QuestionsTest',
@@ -133,7 +134,7 @@ export default {
     }
   },
   mounted () {
-    Lessons
+    Questions
       .getAllQuestions(this.id)
       .then(response => { this.questionsList = response })
       .catch(err => console.error(err))
