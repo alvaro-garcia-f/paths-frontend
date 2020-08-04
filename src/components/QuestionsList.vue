@@ -95,7 +95,8 @@
 </template>
 
 <script>
-import Lessons from '@/services/lessonService'
+// import Lessons from '@/services/lessonService'
+import Questions from '@/services/questionService'
 
 export default {
   name: 'QuestionsList',
@@ -149,7 +150,7 @@ export default {
     },
 
     getAllQuestions () {
-      Lessons
+      Questions
         .getAllQuestions(this.id)
         .then(response => { this.questionList = response })
         .catch(err => console.error(err))
@@ -167,7 +168,7 @@ export default {
         }
       }
 
-      Lessons
+      Questions
         .createQuestion(this.id, data)
         .then(response => {
           this.toggleOverlay()
