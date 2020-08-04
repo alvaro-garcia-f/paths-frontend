@@ -93,7 +93,6 @@
 </template>
 
 <script>
-// import Lessons from '@/services/lessonService'
 import Questions from '@/services/questionService'
 
 export default {

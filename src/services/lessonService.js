@@ -6,6 +6,7 @@ const API = axios.create({
 })
 
 export default {
+
   async createLesson (data) {
     const response = await API.post('/', data, { headers: { token: localStorage.getItem('token') } })
     return response.data
@@ -21,13 +22,4 @@ export default {
     return response.data
   }
 
-  /* async getAllQuestions (id) {
-    const response = await API.get(`/${id}/quiz`, { headers: { token: localStorage.getItem('token') } })
-    return response.data
-  },
-
-  async createQuestion (id, data) {
-    const response = await API.post(`/${id}/quiz`, data, { headers: { token: localStorage.getItem('token') } })
-    return response.data
-  } */
 }
