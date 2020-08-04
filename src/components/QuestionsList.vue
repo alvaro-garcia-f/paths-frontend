@@ -160,12 +160,10 @@ export default {
       const data = {
         question: this.question,
         answer: this.answer,
-        options: {
-          a: this.optionA,
-          b: this.optionB,
-          c: this.optionC,
-          d: this.optionD
-        }
+        option_a: this.optionA,
+        option_b: this.optionB,
+        option_c: this.optionC,
+        option_d: this.optionD
       }
 
       Questions
