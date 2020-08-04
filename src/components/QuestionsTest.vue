@@ -15,7 +15,7 @@
       <v-divider></v-divider>
     </v-row>
 
-    <v-row class="mt-5" justify="center" align="center" v-if="quizDone()">
+    <v-row class="mt-5" justify="center" align="center" v-if="isQuizDone()">
       <v-col>
         <v-card height="60vh" class="success card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import Users from '@/services/userService'
 import Questions from '@/services/questionService'
 
 export default {
@@ -123,13 +124,22 @@ export default {
     nextQuestion () {
       this.correct = false
       this.wrong = false
-      if (!this.quizDone()) {
-        this.currentQuestion++
-      }
+      if (!this.isQuizDone()) { this.currentQuestion++ }
     },
 
-    quizDone () {
-      return this.currentQuestion === this.questionsList.length
+    isQuizDone () {
+      const done = this.currentQuestion === this.questionsList.length
+      if (done) this.endQuiz()
+      return done
+    },
+
+    endQuiz () {
+      if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
+        Users
+          .completeLesson(this.id)
+          .then()
+          .catch(err => console.error(err))
+      }
     }
   },
   mounted () {

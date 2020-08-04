@@ -29,5 +29,10 @@ export default {
   async deleteStudent (id) {
     const response = await API.delete(`/users/student/${id}`, { headers: { token: localStorage.getItem('token') } })
     return response.data
+  },
+
+  async completeLesson (id) {
+    const response = await API.put(`/users/student/lesson/${id}`, null, { headers: { token: localStorage.getItem('token') } })
+    return response.data
   }
 }

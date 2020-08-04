@@ -57,7 +57,7 @@
         </router-link>
       </v-col>
       <v-col>
-        <h1>Question list</h1>
+        <h1>Manage Questions</h1>
       </v-col>
 
       <v-spacer></v-spacer>
