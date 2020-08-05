@@ -40,7 +40,7 @@
         <v-card height="50vh" class="warning card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
             <h2> I'm sorry but that is wrong</h2><br/>
-            <h3>The correct answer is {{ questionsList[currentQuestion].answer }}</h3>
+            <h3>The correct answer is: {{ showAnswer(questionsList[currentQuestion].answer) }}</h3>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -112,6 +112,12 @@ export default {
   },
 
   methods: {
+    showAnswer (answer) {
+      if (answer === 'a') return this.questionsList[this.currentQuestion].option_a
+      if (answer === 'b') return this.questionsList[this.currentQuestion].option_b
+      if (answer === 'c') return this.questionsList[this.currentQuestion].option_c
+      if (answer === 'd') return this.questionsList[this.currentQuestion].option_d
+    },
     answerQuestion (answer) {
       if (answer === this.questionsList[this.currentQuestion].answer) {
         this.correct = true
