@@ -150,7 +150,12 @@ export default {
       if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
         Users
           .completeLesson(this.id)
-          .then()
+          .then(() => {
+            setTimeout(() => {
+              this.$router.push('/main')
+              window.location.reload()
+            }, 2000)
+          })
           .catch(err => console.error(err))
       }
     }

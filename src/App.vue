@@ -42,20 +42,14 @@
             </v-list>
 
             <v-divider></v-divider>
-
             <v-list>
               <v-list-item>
-                <v-list-item-action>
-                  <v-switch v-model="message" color="purple"></v-switch>
-                </v-list-item-action>
-                <v-list-item-title>Enable messages</v-list-item-title>
+                <v-list-item-title><strong>Progress</strong></v-list-item-title>
               </v-list-item>
+              <v-divider></v-divider>
 
-              <v-list-item>
-                <v-list-item-action>
-                  <v-switch v-model="hints" color="purple"></v-switch>
-                </v-list-item-action>
-                <v-list-item-title>Enable hints</v-list-item-title>
+              <v-list-item v-for="(lesson, idx) in this.user.completed" :key="idx">
+                <v-list-item-title> {{ lesson.title }}</v-list-item-title>
               </v-list-item>
             </v-list>
 
@@ -97,16 +91,19 @@ export default {
       localStorage.clear()
       this.$router.push('/')
       window.location.reload()
+    },
+    loadProfile () {
+      Users
+        .getProfile()
+        .then(profile => {
+          this.user.name = profile.name
+          this.user.completed = profile.completed
+        })
+        .catch(err => console.error(err))
     }
   },
-  mounted () {
-    Users
-      .getProfile()
-      .then(profile => {
-        this.user.name = profile.name
-        this.user.completed = profile.completed
-      })
-      .catch(err => console.error(err))
+  created () {
+    this.loadProfile()
   }
 }
 </script>
