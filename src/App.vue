@@ -48,8 +48,8 @@
               </v-list-item>
               <v-divider></v-divider>
 
-              <v-list-item v-for="(lesson, idx) in this.user.completed" :key="idx">
-                <v-list-item-title> {{ lesson.title }}</v-list-item-title>
+              <v-list-item v-for="(lesson, idx) in this.user.completed" :key="idx" dense>
+                <v-list-item-title class="caption"> <strong>{{ lesson.title }}</strong> - <span class="success--text">Completed</span></v-list-item-title>
               </v-list-item>
             </v-list>
 
