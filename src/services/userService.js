@@ -34,5 +34,10 @@ export default {
   async completeLesson (id) {
     const response = await API.put(`/users/student/lesson/${id}`, null, { headers: { token: localStorage.getItem('token') } })
     return response.data
+  },
+
+  async getProfile () {
+    const response = await API.get('/users/me', { headers: { token: localStorage.getItem('token') } })
+    return response.data
   }
 }

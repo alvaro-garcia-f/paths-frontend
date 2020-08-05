@@ -18,28 +18,24 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-avatar color="blue darken-2" class="white--text"
-            size="36" v-bind="attrs" v-on="on">St</v-avatar>
+            size="36" v-bind="attrs" v-on="on"><img src="./assets/avatar.svg"></v-avatar>
           </template>
 
           <v-card>
             <v-list>
               <v-list-item>
                 <v-list-item-avatar>
-                  <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                  <img src="./assets/avatar.svg">
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>John Leider</v-list-item-title>
-                  <v-list-item-subtitle>Founder of Vuetify.js</v-list-item-subtitle>
+                  <v-list-item-title>{{ this.user.name }}</v-list-item-title>
+                  <v-list-item-subtitle>Apprentice</v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-action>
-                  <v-btn
-                    :class="fav ? 'red--text' : ''"
-                    icon
-                    @click="fav = !fav"
-                  >
-                    <v-icon>mdi-heart</v-icon>
+                  <v-btn icon="">
+                    <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -80,8 +76,16 @@
 </template>
 
 <script>
+import Users from '@/services/userService'
+
 export default {
   name: 'App',
+  data () {
+    return {
+      menu: false,
+      user: {}
+    }
+  },
   methods: {
     loggedTeacher () {
       return localStorage.getItem('token') && localStorage.getItem('role') === 'teacher'
@@ -94,6 +98,15 @@ export default {
       this.$router.push('/')
       window.location.reload()
     }
+  },
+  mounted () {
+    Users
+      .getProfile()
+      .then(profile => {
+        this.user.name = profile.name
+        this.user.completed = profile.completed
+      })
+      .catch(err => console.error(err))
   }
 }
 </script>
