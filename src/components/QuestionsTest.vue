@@ -19,8 +19,9 @@
       <v-col>
         <v-card height="60vh" class="success card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
-            <h1>Well done! You have completed the quiz!</h1><br/>
-            <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3>
+            <h1>You have finished the quiz!</h1><br/>
+            <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
+            <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
           </v-card-text>
         </v-card>
       </v-col>
@@ -117,6 +118,12 @@ export default {
       if (answer === 'b') return this.questionsList[this.currentQuestion].option_b
       if (answer === 'c') return this.questionsList[this.currentQuestion].option_c
       if (answer === 'd') return this.questionsList[this.currentQuestion].option_d
+    },
+    returnFeedback (n, total) {
+      if (Math.floor(n * 100 / total) >= 75) {
+        return 'Well done! You are ready to begin with the next lesson!'
+      }
+      return 'Maybe next lesson is still too advanced. You should read this lesson again.'
     },
     answerQuestion (answer) {
       if (answer === this.questionsList[this.currentQuestion].answer) {
