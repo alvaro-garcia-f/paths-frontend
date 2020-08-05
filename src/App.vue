@@ -2,9 +2,15 @@
   <v-app>
     <v-app-bar color="blue" dense dark app>
       <v-toolbar-title><h3>paths</h3></v-toolbar-title>
+
       <v-spacer></v-spacer>
+
       <v-btn class="white--text" color="blue darken-2"
-      @click="logOut()" v-if="logged()">Log Out</v-btn>
+      @click="logOut()" v-if="loggedTeacher()">Log Out</v-btn>
+
+      <v-avatar color="blue darken-2" class="white--text"
+      @click="logOut()" v-if="loggedStudent()" size="36">St</v-avatar>
+
     </v-app-bar>
     <v-main>
       <router-view />
@@ -16,8 +22,11 @@
 export default {
   name: 'App',
   methods: {
-    logged () {
-      return localStorage.getItem('token')
+    loggedTeacher () {
+      return localStorage.getItem('token') && localStorage.getItem('role') === 'teacher'
+    },
+    loggedStudent () {
+      return localStorage.getItem('token') && localStorage.getItem('role') === 'student'
     },
     logOut () {
       localStorage.clear()
