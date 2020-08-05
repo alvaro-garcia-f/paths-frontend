@@ -151,10 +151,11 @@ export default {
         Users
           .completeLesson(this.id)
           .then(() => {
-            setTimeout(() => {
+            this.$root.$emit('lessonCompleted', 'Lesson completed')
+          /*  setTimeout(() => {
               this.$router.push('/main')
               window.location.reload()
-            }, 2000)
+            }, 2000) */
           })
           .catch(err => console.error(err))
       }

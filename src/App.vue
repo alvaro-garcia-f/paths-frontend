@@ -90,20 +90,27 @@ export default {
     logOut () {
       localStorage.clear()
       this.$router.push('/')
-      window.location.reload()
     },
     loadProfile () {
-      Users
-        .getProfile()
-        .then(profile => {
-          this.user.name = profile.name
-          this.user.completed = profile.completed
-        })
-        .catch(err => console.error(err))
+      if (localStorage.getItem('token')) {
+        Users
+          .getProfile()
+          .then(profile => {
+            this.user.name = profile.name
+            this.user.completed = profile.completed
+          })
+          .catch(err => console.error(err))
+      }
     }
   },
   created () {
     this.loadProfile()
+    this.$root.$on('logged', () => {
+      this.loadProfile()
+    })
+    this.$root.$on('lessonCompleted', () => {
+      this.loadProfile()
+    })
   }
 }
 </script>

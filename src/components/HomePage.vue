@@ -20,7 +20,7 @@
         <v-card-actions>
           <v-btn @click="toggleOverlay">Cancel</v-btn>
           <v-spacer></v-spacer>
-          <v-btn  color="blue" class="white--text" @click.prevent="userLogIn">Start</v-btn>
+          <v-btn  color="blue" class="white--text" @keyup.enter="userLogIn" @click.prevent="userLogIn">Start</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -70,6 +70,7 @@ export default {
             localStorage.setItem('token', response.token)
             localStorage.setItem('email', response.email)
             localStorage.setItem('role', response.role)
+            this.$root.$emit('logged', 'User logged in')
             this.$router.push({ path: '/main' })
           }
         })
