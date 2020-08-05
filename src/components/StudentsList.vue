@@ -43,6 +43,29 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog width="500px" :value="progressOverlay" absolute>
+      <v-card>
+        <v-card-title>
+          <h4>{{ this.name }} - Progress</h4>
+        </v-card-title>
+
+        <v-card-text>
+          <v-list dense>
+            <v-list>
+              <v-list-item v-for="(lesson, idx) in completed" :key="idx" dense>
+                <v-list-item-title class="caption"> <strong>{{ lesson.title }}</strong> - <span class="success--text">Completed</span></v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-list>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn  color="blue" class="white--text" @click="toggleProgress">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-row>
       <v-col>
         <h1>Students</h1>
@@ -63,9 +86,13 @@
       <v-col>
         <v-data-table :headers="headers" :items="studentList"
           hide-default-header hide-default-footer class="elevation-1">
-
            <template v-slot:item.actions="{ item }">
              <div class="text-right">
+
+              <v-icon small class="mr-2" @click="openStudentProgress(item)">
+                mdi-eye
+              </v-icon>
+
               <v-icon small class="mr-2" @click="openEditStudent(item)">
                 mdi-pencil
               </v-icon>
@@ -101,10 +128,12 @@ export default {
       studentList: [],
       studentOverlay: false,
       editStudentOverlay: false,
+      progressOverlay: false,
       id: '',
       name: '',
       email: '',
       password: '',
+      completed: [],
       teacher: localStorage.getItem('role') === 'teacher'
     }
   },
@@ -119,6 +148,13 @@ export default {
     toggleEditOverlay () {
       this.editStudentOverlay = !this.editStudentOverlay
       this.id = ''
+      this.name = ''
+      this.email = ''
+      this.password = ''
+    },
+
+    toggleProgress () {
+      this.progressOverlay = !this.progressOverlay
       this.name = ''
       this.email = ''
       this.password = ''
@@ -175,6 +211,12 @@ export default {
           this.getAllStudents()
         })
         .catch(err => console.error(err))
+    },
+
+    openStudentProgress (student) {
+      this.toggleProgress()
+      this.name = student.name
+      this.completed = student.completed
     }
   },
   mounted () {
