@@ -89,9 +89,11 @@
            <template v-slot:item.actions="{ item }">
              <div class="text-right">
 
-              <v-icon small class="mr-2" @click="openStudentProgress(item)">
-                mdi-eye
-              </v-icon>
+              <v-btn text :to="{ name:'Student', params: { id: item._id } }">
+                <v-icon small class="mr-2">
+                  mdi-eye
+                </v-icon>
+              </v-btn>
 
               <v-icon small class="mr-2" @click="openEditStudent(item)">
                 mdi-pencil

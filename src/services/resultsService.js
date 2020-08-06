@@ -15,5 +15,10 @@ export default {
   async getOwnResults () {
     const response = await API.get('/user/me', { headers: { token: localStorage.getItem('token') } })
     return response.data
+  },
+
+  async getResults (id) {
+    const response = await API.get(`/user/${id}`, { headers: { token: localStorage.getItem('token') } })
+    return response.data
   }
 }

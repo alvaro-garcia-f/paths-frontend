@@ -39,5 +39,10 @@ export default {
   async getProfile () {
     const response = await API.get('/users/me', { headers: { token: localStorage.getItem('token') } })
     return response.data
+  },
+
+  async getStudent (id) {
+    const response = await API.get(`/users/students/${id}`, { headers: { token: localStorage.getItem('token') } })
+    return response.data
   }
 }
