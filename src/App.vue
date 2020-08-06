@@ -48,8 +48,13 @@
               </v-list-item>
               <v-divider></v-divider>
 
-              <v-list-item v-for="(lesson, idx) in this.user.completed" :key="idx" dense>
-                <v-list-item-title class="caption"> <strong>{{ lesson.title }}</strong> - <span class="success--text">Completed</span></v-list-item-title>
+              <v-list-item class="caption mb-1" v-for="(lesson, idx) in lessons" :key="idx" dense>
+                <v-list-item-title > <strong>{{ lesson.title }}</strong> <span v-if="lessonCompleted(lesson)"><v-icon class="success--text" small>mdi-check</v-icon></span><br/>
+                <span class="font-weight-light">Total Answers: {{ lessonTotals(lesson._id) }}<br/> Correct Answers: {{ lessonCorrects(lesson._id) }}</span>
+                </v-list-item-title>
+                <v-list-item-action>
+                  <v-progress-circular size="40" :value="correctPercentage(lesson._id)" color="green lighten-2">{{ correctPercentage(lesson._id) }}</v-progress-circular>
+                </v-list-item-action>
               </v-list-item>
             </v-list>
 
@@ -71,13 +76,17 @@
 
 <script>
 import Users from '@/services/userService'
+import Lessons from '@/services/lessonService'
+import Results from '@/services/resultsService'
 
 export default {
   name: 'App',
   data () {
     return {
       menu: false,
-      user: {}
+      user: {},
+      results: [],
+      lessons: []
     }
   },
   methods: {
@@ -98,8 +107,43 @@ export default {
           .then(profile => {
             this.user.name = profile.name
             this.user.completed = profile.completed
+
+            Lessons
+              .getAllLessons()
+              .then(lessons => {
+                this.lessons = lessons
+
+                Results
+                  .getOwnResults()
+                  .then(results => {
+                    this.results = results
+                  })
+                  .catch(err => console.error(err))
+              })
+              .catch(err => console.error(err))
           })
           .catch(err => console.error(err))
+      }
+    },
+    lessonCompleted (lesson) {
+      if (localStorage.getItem('token')) {
+        const matches = this.user.completed.filter(l => lesson.title === l.title)
+        return matches.length > 0
+      }
+    },
+    lessonTotals (id) {
+      if (localStorage.getItem('token')) {
+        return this.results.filter(r => r.lesson === id).length
+      }
+    },
+    lessonCorrects (id) {
+      if (localStorage.getItem('token')) {
+        return this.results.filter(r => r.lesson === id && r.correct).length
+      }
+    },
+    correctPercentage (id) {
+      if (localStorage.getItem('token')) {
+        return this.lessonCorrects(id) * 100 / this.lessonTotals(id)
       }
     }
   },

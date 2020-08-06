@@ -10,6 +10,10 @@ export default {
   async addAnswer (data) {
     const response = await API.post('/', data, { headers: { token: localStorage.getItem('token') } })
     return response.data
-  }
+  },
 
+  async getOwnResults () {
+    const response = await API.get('/user/me', { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  }
 }
