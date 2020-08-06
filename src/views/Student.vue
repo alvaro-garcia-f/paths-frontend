@@ -46,10 +46,17 @@
 
     <v-row>
       <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in lessonList" :key="idx">
-        <v-card height="250px" class="card-outter">
+        <v-card height="300px" class="card-outter">
           <v-card-title>
             <h4>{{ lesson.title }}</h4>
           </v-card-title>
+          <v-card-subtitle>
+            Answers: {{ lessonTotals(lesson._id) }}<br/>
+            Correct: {{ lessonCorrects(lesson._id) }}
+          </v-card-subtitle>
+          <v-card-text class="text-center align-center ">
+            <v-progress-circular color="green lighten-2" :value="lessonPercentage(lesson._id)" size="80">{{ lessonPercentage(lesson._id) }}</v-progress-circular>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -72,14 +79,32 @@ export default {
   props: {
     id: String
   },
+  computed: {
+
+  },
   methods: {
+
     totalCorrect () {
       return this.results.filter(r => r.correct).length
     },
+
     totalPercentage () {
       return this.totalCorrect() * 100 / this.results.length
+    },
+
+    lessonTotals (id) {
+      return this.results.filter(r => r.lesson === id).length
+    },
+
+    lessonCorrects (id) {
+      return this.results.filter(r => r.lesson === id && r.correct).length
+    },
+
+    lessonPercentage (id) {
+      return this.lessonCorrects(id) * 100 / this.lessonTotals(id)
     }
   },
+
   created () {
     Users
       .getStudent(this.id)

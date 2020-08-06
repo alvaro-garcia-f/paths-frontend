@@ -7,8 +7,13 @@ const API = axios.create({
 
 export default {
 
+  async getQuestion (id) {
+    const response = await API.get(`/${id}`, { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  },
+
   async getAllQuestions (lessonId) {
-    const response = await API.get(`/${lessonId}`, { headers: { token: localStorage.getItem('token') } })
+    const response = await API.get(`/lessons/${lessonId}`, { headers: { token: localStorage.getItem('token') } })
     return response.data
   },
 
