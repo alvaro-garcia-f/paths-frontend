@@ -149,10 +149,7 @@ export default {
   },
   created () {
     this.loadProfile()
-    this.$root.$on('logged', () => {
-      this.loadProfile()
-    })
-    this.$root.$on('lessonCompleted', () => {
+    this.$root.$on('dataChange', () => {
       this.loadProfile()
     })
   }

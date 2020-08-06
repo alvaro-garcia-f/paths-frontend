@@ -70,7 +70,7 @@ export default {
             localStorage.setItem('token', response.token)
             localStorage.setItem('email', response.email)
             localStorage.setItem('role', response.role)
-            this.$root.$emit('logged', 'User logged in')
+            this.$root.$emit('dataChange', 'User logged in')
             this.$router.push({ path: '/main' })
           }
         })

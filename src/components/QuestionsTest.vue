@@ -143,7 +143,9 @@ export default {
 
       Results
         .addAnswer(data)
-        .then()
+        .then(() => {
+          this.$root.$emit('dataChange', 'Question answered')
+        })
         .catch(err => console.error(err))
     },
 
@@ -164,7 +166,7 @@ export default {
         Users
           .completeLesson(this.id)
           .then(() => {
-            this.$root.$emit('lessonCompleted', 'Lesson completed')
+            this.$root.$emit('dataChange', 'Lesson completed')
           })
           .catch(err => console.error(err))
       }
