@@ -96,6 +96,7 @@
 <script>
 import Users from '@/services/userService'
 import Questions from '@/services/questionService'
+import Results from '@/services/resultsService'
 
 export default {
   name: 'QuestionsTest',
@@ -126,12 +127,24 @@ export default {
       return 'Maybe next lesson is still too advanced. You should read this lesson again.'
     },
     answerQuestion (answer) {
+      const data = {
+        lesson: this.id,
+        question: this.questionsList[this.currentQuestion]._id
+      }
+
       if (answer === this.questionsList[this.currentQuestion].answer) {
         this.correct = true
+        data.correct = true
         this.correctAnswers++
       } else {
         this.wrong = true
+        data.correct = false
       }
+
+      Results
+        .addAnswer(data)
+        .then()
+        .catch(err => console.error(err))
     },
 
     nextQuestion () {
@@ -152,10 +165,6 @@ export default {
           .completeLesson(this.id)
           .then(() => {
             this.$root.$emit('lessonCompleted', 'Lesson completed')
-          /*  setTimeout(() => {
-              this.$router.push('/main')
-              window.location.reload()
-            }, 2000) */
           })
           .catch(err => console.error(err))
       }
