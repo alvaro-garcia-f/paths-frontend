@@ -68,7 +68,7 @@
 
         </v-data-table> -->
         <v-list>
-          <vuedraggable v-model="lessonList" group="lessons" @start="drag=true" @end="drag=false">
+          <vuedraggable v-model="lessonList" group="lessons" @start="drag=true" @end="drag=false" @change="updateOrder()">
             <v-list-item v-for="(lesson, idx) in lessonList" :key="idx">
               <v-card class="my-1" width="100%">
                 <v-card-text>
@@ -159,11 +159,6 @@ export default {
       completedLessons: []
     }
   },
-  computed: {
-    prepareContent () {
-      return this.content.split('<--')
-    }
-  },
   components: {
     vuedraggable
   },
@@ -215,6 +210,16 @@ export default {
     isLocked (lock) {
       if (localStorage.getItem('role') === 'teacher' || !lock) return false
       return !this.completedLessons.map(lesson => lesson._id).includes(lock)
+    },
+
+    updateOrder () {
+      const data = this.lessonList.map(lesson => lesson._id)
+
+      Lessons
+        .updateOrder(data)
+        .then(list => {
+          this.lessonList = list
+        })
     }
   }
 }
