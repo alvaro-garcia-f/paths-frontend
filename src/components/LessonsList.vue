@@ -41,7 +41,7 @@
 
     <v-row class="mt-2" v-if="teacher">
       <v-col>
-        <v-data-table :headers="headers" :items="lessonList"
+        <!-- <v-data-table :headers="headers" :items="lessonList"
           hide-default-header hide-default-footer class="elevation-1">
 
            <template v-slot:item.actions="{ item }">
@@ -66,7 +66,42 @@
              </div>
           </template>
 
-        </v-data-table>
+        </v-data-table> -->
+        <v-list>
+          <vuedraggable v-model="lessonList" group="lessons" @start="drag=true" @end="drag=false">
+            <v-list-item v-for="(lesson, idx) in lessonList" :key="idx">
+              <v-card class="my-1" width="100%">
+                <v-card-text>
+                  <v-row align="center">
+                    <v-col class="py-0 my-0">
+                      {{lesson.title}}
+                    </v-col>
+                    <v-spacer></v-spacer>
+                    <v-col class="text-right py-0 my-0">
+                      <v-btn alt="Edit quiz" :to="{ name: 'Quiz', params: { id: lesson._id } }" icon>
+                        <v-icon small>
+                          mdi-comment-question
+                        </v-icon>
+                      </v-btn>
+
+                      <v-btn alt="Edit lesson"  @click="openEditQuestion(lesson)" icon>
+                        <v-icon small>
+                          mdi-pencil
+                        </v-icon>
+                      </v-btn>
+
+                      <v-btn alt="Delete lesson" @click="removeQuestion(lesson)" icon>
+                        <v-icon small>
+                          mdi-delete
+                        </v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-list-item>
+          </vuedraggable>
+        </v-list>
       </v-col>
     </v-row>
 
@@ -98,6 +133,7 @@
 <script>
 import Lessons from '@/services/lessonService'
 import Users from '@/services/userService'
+import vuedraggable from 'vuedraggable'
 
 export default {
   name: 'LessonsList',
@@ -127,6 +163,9 @@ export default {
     prepareContent () {
       return this.content.split('<--')
     }
+  },
+  components: {
+    vuedraggable
   },
   mounted () {
     this.getAllLessons()
