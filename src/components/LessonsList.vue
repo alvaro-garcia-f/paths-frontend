@@ -10,7 +10,8 @@
           <v-form>
             <v-text-field label="Title" v-model="title"></v-text-field>
             <v-text-field label="Url" v-model="url"></v-text-field>
-            <v-textarea label="Content" v-model="content"></v-textarea>
+            <v-textarea label="Description" v-model="description"></v-textarea>
+            <v-select v-model="lock" :items="lessonTitles" label="Previous lesson"></v-select>
           </v-form>
         </v-card-text>
 
@@ -41,9 +42,15 @@
     <v-row class="mt-2">
       <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in lessonList" :key="idx">
         <v-card height="250px" class="card-outter">
+          <v-overlay :value="isLocked(lesson.lock)" absolute>
+            <v-icon>mdi-lock</v-icon>
+          </v-overlay>
           <v-card-title>
             <h4>{{ lesson.title }}</h4>
           </v-card-title>
+          <v-card-text>
+            {{ lesson.description}}
+          </v-card-text>
           <v-card-actions class="card-actions">
             <v-btn  color="yellow darken-2" class="white--text" :to="{ name: 'Quiz', params: { id: lesson._id } }">Quiz</v-btn>
             <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { id: lesson._id } }">View Lesson</v-btn>
@@ -56,6 +63,7 @@
 
 <script>
 import Lessons from '@/services/lessonService'
+import Users from '@/services/userService'
 
 export default {
   name: 'LessonsList',
@@ -65,8 +73,12 @@ export default {
       lessonOverlay: false,
       title: '',
       url: '',
-      content: '',
-      teacher: localStorage.getItem('role') === 'teacher'
+      description: '',
+      lock: '',
+      lessonTitles: [],
+      lessonIds: [],
+      teacher: localStorage.getItem('role') === 'teacher',
+      completedLessons: []
     }
   },
   computed: {
@@ -76,6 +88,13 @@ export default {
   },
   mounted () {
     this.getAllLessons()
+
+    Users
+      .getProfile()
+      .then(user => {
+        this.completedLessons = user.completed
+      })
+      .catch(err => console.error(err))
   },
   methods: {
     toggleOverlay () {
@@ -85,7 +104,12 @@ export default {
     getAllLessons () {
       Lessons
         .getAllLessons()
-        .then(response => { this.lessonList = response })
+        .then(response => {
+          this.lessonList = response
+          this.lessonTitles = this.lessonList.map(lesson => lesson.title)
+          this.lessonTitles.unshift('None')
+          this.lessonIds = this.lessonList.map(lesson => lesson._id)
+        })
         .catch(err => console.error(err))
     },
 
@@ -93,7 +117,8 @@ export default {
       const data = {
         title: this.title,
         url: this.url,
-        content: this.prepareContent
+        description: this.description,
+        lock: this.lessonIds[this.lessonTitles.findIndex(el => el === this.lock) - 1]
       }
 
       Lessons
@@ -103,6 +128,11 @@ export default {
           this.toggleOverlay()
         })
         .catch(err => console.error(err))
+    },
+
+    isLocked (lock) {
+      if (localStorage.getItem('role') === 'teacher' || !lock) return false
+      return !this.completedLessons.map(lesson => lesson._id).includes(lock)
     }
   }
 }
