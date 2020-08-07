@@ -42,8 +42,8 @@
     <v-row class="mt-2">
       <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in lessonList" :key="idx">
         <v-card height="250px" class="card-outter">
-          <v-overlay :value="isLocked(lesson.lock)" absolute>
-            <v-icon>mdi-lock</v-icon>
+          <v-overlay :value="isLocked(lesson.lock)" color="blue" opacity="1" absolute>
+            <v-icon x-large>mdi-lock</v-icon>
           </v-overlay>
           <v-card-title>
             <h4>{{ lesson.title }}</h4>
