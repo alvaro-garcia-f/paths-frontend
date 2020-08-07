@@ -121,7 +121,8 @@ export default {
         title: this.title,
         url: this.url,
         description: this.description,
-        lock: this.lessonIds[this.lessonTitles.findIndex(el => el === this.lock) - 1]
+        lock: this.lessonIds[this.lessonTitles.findIndex(el => el === this.lock) - 1],
+        order: this.lessonList.length
       }
 
       Lessons
