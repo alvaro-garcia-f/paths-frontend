@@ -41,13 +41,16 @@
 
     <v-row class="mt-2">
       <v-col cols="12" sm="6" lg="3" v-for="(lesson, idx) in lessonList" :key="idx">
-        <v-card height="250px" class="card-outter">
+        <v-card height="350px" class="card-outter">
           <v-overlay :value="isLocked(lesson.lock)" color="blue" opacity="1" absolute>
             <v-icon x-large>mdi-lock</v-icon>
           </v-overlay>
-          <v-card-title>
-            <h4>{{ lesson.title }}</h4>
-          </v-card-title>
+
+          <v-img class="white--text align-end" height="200px"
+              :src="'https://picsum.photos/200/500?random=' + idx">
+            <v-card-title> <h4>{{ lesson.title }}</h4> </v-card-title>
+          </v-img>
+
           <v-card-text>
             {{ lesson.description}}
           </v-card-text>
