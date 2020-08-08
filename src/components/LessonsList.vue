@@ -47,11 +47,11 @@
               <v-card class="my-1" width="100%">
                 <v-card-text>
                   <v-row align="center">
-                    <v-col class="py-0 my-0">
+                    <v-col cols="9" sm="6" class="py-0 my-0">
                       {{lesson.title}}
                     </v-col>
-                    <v-spacer></v-spacer>
-                    <v-col class="text-right py-0 my-0">
+                    <v-spacer class="hidden-xs-only"></v-spacer>
+                    <v-col cols="1" sm="4" class="text-right py-0 my-0">
                       <v-btn alt="Edit quiz" :to="{ name: 'Quiz', params: { id: lesson._id } }" icon>
                         <v-icon small>
                           mdi-comment-question
