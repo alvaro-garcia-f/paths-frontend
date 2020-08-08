@@ -137,6 +137,8 @@ export default {
     vuedraggable
   },
   mounted () {
+    sessionStorage.setItem('tab', 'lessons')
+
     this.getAllLessons()
 
     Users

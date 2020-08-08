@@ -234,6 +234,8 @@ export default {
     }
   },
   mounted () {
+    sessionStorage.setItem('tab', 'students')
+
     this.getAllStudents()
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-tabs>
+    <v-tabs :value = "getActiveTab()">
       <v-tabs-slider></v-tabs-slider>
       <v-tab href="#lessons">Lessons</v-tab>
       <v-tab href="#students" v-if="teacher">Students</v-tab>
@@ -31,6 +31,11 @@ export default {
   components: {
     LessonsList,
     StudentsList
+  },
+  methods: {
+    getActiveTab () {
+      return sessionStorage.getItem('tab') || 'lessons'
+    }
   }
 }
 </script>
