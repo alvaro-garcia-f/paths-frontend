@@ -89,14 +89,14 @@
             <v-card class="my-1" width="100%">
               <v-card-text>
                 <v-row align="center">
-                  <v-col class="py-0 my-0">
+                  <v-col cols="10" sm="4" class="py-0 my-0">
                     {{ student.name }}
                   </v-col>
-                  <v-col class="py-0 my-0">
+                  <v-col class="py-0 my-0 hidden-xs-only">
                     {{ student.email }}
                   </v-col>
-                  <v-spacer></v-spacer>
-                  <v-col class="text-right py-0 my-0">
+                  <v-spacer class="hidden-xs-only"></v-spacer>
+                  <v-col cols="1" sm="3" class="text-right pa-0 my-0">
                     <v-btn alt="Student progress" :to="{ name: 'Student', params: { id: student._id } }" icon>
                       <v-icon small>
                         mdi-eye
