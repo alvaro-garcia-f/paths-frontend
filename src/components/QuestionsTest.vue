@@ -17,11 +17,16 @@
 
     <v-row class="mt-5" justify="center" align="center" v-if="isQuizDone()">
       <v-col>
-        <v-card height="60vh" class="success card-outter">
-          <v-card-text height="100%" class="text-center white--text card-text">
-            <h1>You have finished the quiz!</h1><br/>
-            <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
-            <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
+        <v-card height="60vh" class="success">
+          <v-card-text class="text-center white--text" style="height: 100%">
+            <v-row align="center" style="height: 100%">
+              <v-col>
+                <h1>You have finished the quiz!</h1><br/>
+                <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
+                <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
+                <v-btn>Log</v-btn>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>

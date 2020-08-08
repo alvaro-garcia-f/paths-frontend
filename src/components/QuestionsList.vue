@@ -45,7 +45,7 @@
         <v-card-actions>
           <v-btn @click="toggleEditOverlay">Cancel</v-btn>
           <v-spacer></v-spacer>
-          <v-btn  color="blue" class="white--text" @click.prevent="editStudent">Save</v-btn>
+          <v-btn  color="blue" class="white--text" @click.prevent="editQuestion">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
