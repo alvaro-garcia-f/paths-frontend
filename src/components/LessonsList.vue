@@ -41,32 +41,6 @@
 
     <v-row class="mt-2" v-if="teacher">
       <v-col>
-        <!-- <v-data-table :headers="headers" :items="lessonList"
-          hide-default-header hide-default-footer class="elevation-1">
-
-           <template v-slot:item.actions="{ item }">
-              <div class="text-right">
-                <v-btn alt="Edit quiz" :to="{ name: 'Quiz', params: { id: item._id } }" text x-small>
-                  <v-icon small>
-                    mdi-comment-question
-                  </v-icon>
-                </v-btn>
-
-                <v-btn alt="Edit quiz"  @click="openEditQuestion(item)" text x-small>
-                  <v-icon small>
-                    mdi-pencil
-                  </v-icon>
-                </v-btn>
-
-                <v-btn alt="Edit quiz" @click="removeQuestion(item)" text x-small>
-                  <v-icon small>
-                    mdi-delete
-                  </v-icon>
-                </v-btn>
-             </div>
-          </template>
-
-        </v-data-table> -->
         <v-list>
           <vuedraggable v-model="lessonList" group="lessons" @start="drag=true" @end="drag=false" @change="updateOrder()">
             <v-list-item v-for="(lesson, idx) in lessonList" :key="idx">

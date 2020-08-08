@@ -84,28 +84,40 @@
 
     <v-row class="mt-2">
       <v-col>
-        <v-data-table :headers="headers" :items="studentList"
-          hide-default-header hide-default-footer class="elevation-1">
-           <template v-slot:item.actions="{ item }">
-             <div class="text-right">
-
-              <v-btn text :to="{ name:'Student', params: { id: item._id } }">
-                <v-icon small class="mr-2">
-                  mdi-eye
-                </v-icon>
-              </v-btn>
-
-              <v-icon small class="mr-2" @click="openEditStudent(item)">
-                mdi-pencil
-              </v-icon>
-
-              <v-icon small @click="removeStudent(item)">
-                mdi-delete
-              </v-icon>
-             </div>
-          </template>
-
-        </v-data-table>
+        <v-list>
+          <v-list-item v-for="(student, idx) in studentList" :key="idx">
+            <v-card class="my-1" width="100%">
+              <v-card-text>
+                <v-row align="center">
+                  <v-col class="py-0 my-0">
+                    {{ student.name }}
+                  </v-col>
+                  <v-col class="py-0 my-0">
+                    {{ student.email }}
+                  </v-col>
+                  <v-spacer></v-spacer>
+                  <v-col class="text-right py-0 my-0">
+                    <v-btn alt="Student progress" :to="{ name: 'Student', params: { id: student._id } }" icon>
+                      <v-icon small>
+                        mdi-eye
+                      </v-icon>
+                    </v-btn>
+                    <v-btn alt="Edit lesson"  @click="openEditStudent(student)" icon>
+                      <v-icon small>
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                    <v-btn alt="Delete lesson" @click="removeStudent(student)" icon>
+                      <v-icon small>
+                        mdi-delete
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-list-item>
+        </v-list>
       </v-col>
     </v-row>
   </v-container>

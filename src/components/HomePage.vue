@@ -7,12 +7,12 @@
         </v-card-title>
 
         <v-card-text>
-          <v-form>
-            <v-text-field label="E-mail" prepend-icon="mdi-mail"
-            v-model="email"></v-text-field>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field label="E-mail" prepend-icon="mdi-mail" v-model="email"
+            :rules="loginRules" @keypress.enter.prevent="userLogIn()" @focus="resetValidation()" required></v-text-field>
 
-            <v-text-field type="password" label="Password" prepend-icon="mdi-lock"
-            v-model="password"></v-text-field>
+            <v-text-field type="password" label="Password" prepend-icon="mdi-lock" v-model="password"
+            :rules="loginRules" @keypress.enter.prevent="userLogIn()" @focus="resetValidation()" required></v-text-field>
 
           </v-form>
         </v-card-text>
@@ -20,7 +20,7 @@
         <v-card-actions>
           <v-btn @click="toggleOverlay">Cancel</v-btn>
           <v-spacer></v-spacer>
-          <v-btn  color="blue" class="white--text" @keyup.enter="userLogIn" @click.prevent="userLogIn">Start</v-btn>
+          <v-btn  color="blue" class="white--text" @click.prevent="userLogIn()">Start</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -51,7 +51,13 @@ export default {
     return {
       logInOverlay: false,
       email: '',
-      password: ''
+      password: '',
+      loginCorrect: true,
+      valid: true,
+      loginRules: [
+        v => !!v || 'This cannot be empty',
+        v => (v && this.loginCorrect) || "Ooops! I don't recognize that username or password"
+      ]
     }
   },
   methods: {
@@ -65,8 +71,12 @@ export default {
       Users
         .logIn(data)
         .then(response => {
-          if (response.error) console.error(response.error)
-          else {
+          if (response.error) {
+            console.error(response.error)
+            this.loginCorrect = false
+            console.log(this.$refs.form)
+            this.$refs.form.validate()
+          } else {
             localStorage.setItem('token', response.token)
             localStorage.setItem('email', response.email)
             localStorage.setItem('role', response.role)
@@ -74,7 +84,14 @@ export default {
             this.$router.push({ path: '/main' })
           }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    resetValidation () {
+      this.loginCorrect = true
+      this.$refs.form.resetValidation()
     }
   }
 }
