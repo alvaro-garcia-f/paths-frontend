@@ -73,22 +73,32 @@
 
     <v-row class="mt-2">
       <v-col>
-        <v-data-table :headers="headers" :items="questionList"
-          hide-default-header hide-default-footer class="elevation-1">
-
-           <template v-slot:item.actions="{ item }">
-             <div class="text-right">
-              <v-icon small class="mr-2" @click="openEditQuestion(item)">
-                mdi-pencil
-              </v-icon>
-
-              <v-icon small @click="removeQuestion(item)">
-                mdi-delete
-              </v-icon>
-             </div>
-          </template>
-
-        </v-data-table>
+         <v-list>
+          <v-list-item v-for="(question, idx) in questionList" :key="idx">
+            <v-card class="my-1" width="100%">
+              <v-card-text>
+                <v-row align="center">
+                  <v-col cols="9" sm="6" class="py-0 my-0">
+                    {{ question.question }}
+                  </v-col>
+                  <v-spacer class="hidden-xs-only"></v-spacer>
+                  <v-col cols="1" sm="4" class="text-right py-0 my-0">
+                    <v-btn alt="Edit question"  @click="openEditQuestion(question)" icon>
+                      <v-icon small>
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                    <v-btn alt="Delete question" @click="removeQuestion(question)" icon>
+                      <v-icon small>
+                        mdi-delete
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-list-item>
+        </v-list>
       </v-col>
     </v-row>
   </v-container>
@@ -101,14 +111,6 @@ export default {
   name: 'QuestionsList',
   data () {
     return {
-      headers: [
-        {
-          text: 'Question',
-          align: 'start',
-          value: 'question'
-        },
-        { text: 'Actions', value: 'actions' }
-      ],
       questionList: [],
       questionOverlay: false,
       editQuestionOverlay: false,
