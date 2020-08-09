@@ -20,6 +20,15 @@ export default {
   async createQuestion (lessonId, data) {
     const response = await API.post(`/${lessonId}`, data, { headers: { token: localStorage.getItem('token') } })
     return response.data
-  }
+  },
 
+  async editQuestion (id, data) {
+    const response = await API.put(`/${id}`, data, { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  },
+
+  async deleteQuestion (id) {
+    const response = await API.delete(`/${id}`, { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  }
 }

@@ -174,6 +174,45 @@ export default {
           this.getAllQuestions()
         })
         .catch(err => console.error(err))
+    },
+
+    openEditQuestion (question) {
+      this.toggleEditOverlay()
+      this.questionId = question._id
+      this.question = question.question
+      this.answer = question.answer
+      this.optionA = question.option_a
+      this.optionB = question.option_b
+      this.optionC = question.option_c
+      this.optionD = question.option_d
+    },
+
+    editQuestion () {
+      const data = {
+        question: this.question,
+        answer: this.answer,
+        option_a: this.optionA,
+        option_b: this.optionB,
+        option_c: this.optionC,
+        option_d: this.optionD
+      }
+
+      Questions
+        .editQuestion(this.questionId, data)
+        .then(response => {
+          this.getAllQuestions()
+          this.toggleEditOverlay()
+        })
+        .catch(err => console.error(err))
+    },
+
+    removeQuestion (question) {
+      Questions
+        .deleteQuestion(question._id)
+        .then(response => {
+          this.getAllQuestions()
+        })
+        .catch(err => console.error(err))
     }
   },
   mounted () {
