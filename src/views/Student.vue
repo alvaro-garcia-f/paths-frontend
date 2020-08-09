@@ -18,7 +18,7 @@
     <v-row class="mt-2">
       <v-col cols="12">
         <v-card>
-          <div class="d-flex flex-no-wrap align-center">
+          <div class="d-flex flex-wrap align-center">
             <v-avatar class="ma-3" size="125" tile>
                 <v-img src="../assets/avatar.svg"></v-img>
             </v-avatar>
@@ -89,7 +89,7 @@ export default {
     },
 
     totalPercentage () {
-      return this.totalCorrect() * 100 / this.results.length
+      return Math.floor(this.totalCorrect() * 100 / this.results.length) || 0
     },
 
     lessonTotals (id) {
@@ -101,7 +101,7 @@ export default {
     },
 
     lessonPercentage (id) {
-      return this.lessonCorrects(id) * 100 / this.lessonTotals(id)
+      return Math.floor(this.lessonCorrects(id) * 100 / this.lessonTotals(id)) || 0
     }
   },
 
