@@ -23,6 +23,29 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog  width="500px" :value="editLessonOverlay" absolute>
+      <v-card>
+        <v-card-title>
+          <h4>Edit Lesson</h4>
+        </v-card-title>
+
+        <v-card-text>
+          <v-form>
+            <v-text-field label="Title" v-model="title"></v-text-field>
+            <v-text-field label="Url" v-model="url"></v-text-field>
+            <v-textarea label="Description" v-model="description"></v-textarea>
+            <v-select v-model="lock" :items="lessonTitles" label="Previous lesson"></v-select>
+          </v-form>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn @click="toggleEditOverlay">Cancel</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn  color="blue" class="white--text" @click.prevent="editLesson">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-row>
       <v-col>
         <h1>Lessons</h1>
@@ -58,13 +81,13 @@
                         </v-icon>
                       </v-btn>
 
-                      <v-btn alt="Edit lesson"  @click="openEditQuestion(lesson)" icon>
+                      <v-btn alt="Edit lesson"  @click="openEditLesson(lesson)" icon>
                         <v-icon small>
                           mdi-pencil
                         </v-icon>
                       </v-btn>
 
-                      <v-btn alt="Delete lesson" @click="removeQuestion(lesson)" icon>
+                      <v-btn alt="Delete lesson" @click="removeLesson(lesson)" icon>
                         <v-icon small>
                           mdi-delete
                         </v-icon>
@@ -123,6 +146,8 @@ export default {
       ],
       lessonList: [],
       lessonOverlay: false,
+      editLessonOverlay: false,
+      id: '',
       title: '',
       url: '',
       description: '',
@@ -151,6 +176,21 @@ export default {
   methods: {
     toggleOverlay () {
       this.lessonOverlay = !this.lessonOverlay
+      this.title = ''
+      this.url = ''
+      this.description = ''
+      this.lock = ''
+      this.order = ''
+    },
+
+    toggleEditOverlay () {
+      this.editLessonOverlay = !this.editLessonOverlay
+      this.id = ''
+      this.title = ''
+      this.url = ''
+      this.description = ''
+      this.lock = ''
+      this.order = ''
     },
 
     getAllLessons () {
@@ -196,6 +236,43 @@ export default {
         .then(list => {
           this.lessonList = list
         })
+    },
+
+    openEditLesson (lesson) {
+      this.toggleEditOverlay()
+      this.id = lesson._id
+      this.title = lesson.title
+      this.url = lesson.url
+      this.description = lesson.description
+      this.lock = this.lessonTitles[this.lessonIds.findIndex(el => el === lesson.lock) + 1]
+      this.order = lesson.order
+    },
+
+    editLesson () {
+      const data = {
+        title: this.title,
+        url: this.url,
+        description: this.description,
+        lock: this.lessonIds[this.lessonTitles.findIndex(el => el === this.lock) - 1],
+        order: this.order
+      }
+
+      Lessons
+        .editLesson(this.id, data)
+        .then(response => {
+          this.getAllLessons()
+          this.toggleEditOverlay()
+        })
+        .catch(err => console.error(err))
+    },
+
+    removeLesson (lesson) {
+      Lessons
+        .deleteLesson(lesson._id)
+        .then(response => {
+          this.getAllLessons()
+        })
+        .catch(err => console.error(err))
     }
   }
 }

@@ -27,8 +27,18 @@ export default {
     return response.data
   },
 
+  async editLesson (id, data) {
+    const response = await API.put(`/${id}`, data, { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  },
+
   async updateOrder (data) {
     const response = await API.put('/order', data, { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  },
+
+  async deleteLesson (id) {
+    const response = await API.delete(`/${id}`, { headers: { token: localStorage.getItem('token') } })
     return response.data
   }
 
