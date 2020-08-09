@@ -86,11 +86,11 @@
             <v-icon x-large>mdi-lock</v-icon>
           </v-overlay>
 
-          <v-img class="white--text align-end" height="200px"
-              :src="'https://picsum.photos/200/500?random=' + idx">
-            <v-card-title> <h4>{{ lesson.title }}</h4> </v-card-title>
+          <v-img class="align-end" height="200px"
+              :src="require('../assets/cards/lesson' + (idx + 1) + '.svg')">
           </v-img>
 
+          <v-card-title> <h4>{{ lesson.title }}</h4> </v-card-title>
           <v-card-text>
             {{ lesson.description}}
           </v-card-text>
