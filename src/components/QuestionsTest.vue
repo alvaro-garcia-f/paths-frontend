@@ -112,7 +112,8 @@ export default {
       currentQuestion: 0,
       correctAnswers: 0,
       correct: false,
-      wrong: false
+      wrong: false,
+      nextLesson: {}
     }
   },
   props: {
@@ -188,21 +189,25 @@ export default {
 
     redirectTo () {
       if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
-        const thisLesson = this.questionsList[0].lesson
-        Lessons
-          .getNextLesson(thisLesson)
-          .then(next => {
-            return { name: 'Lesson', params: { id: next._id } }
-          })
-          .catch(err => console.error(err))
+        return this.nextLesson
+      } else {
+        return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
       }
-      return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
     }
   },
   mounted () {
     Questions
       .getAllQuestions(this.id)
-      .then(response => { this.questionsList = response })
+      .then(response => {
+        this.questionsList = response
+
+        Lessons
+          .getNextLesson(response[0].lesson)
+          .then(next => {
+            this.nextLesson = { name: 'Lesson', params: { id: next[0]._id } }
+          })
+          .catch(err => console.error(err))
+      })
       .catch(err => console.error(err))
   }
 }
