@@ -143,7 +143,7 @@ export default {
     },
     correctPercentage (id) {
       if (localStorage.getItem('token')) {
-        return this.lessonCorrects(id) * 100 / this.lessonTotals(id)
+        return Math.floor(this.lessonCorrects(id) * 100 / this.lessonTotals(id)) || 0
       }
     }
   },
