@@ -17,6 +17,11 @@ export default {
     return response.data
   },
 
+  async getNextLesson (id) {
+    const response = await API.get(`/${id}/next`, { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  },
+
   async createLesson (data) {
     const response = await API.post('/', data, { headers: { token: localStorage.getItem('token') } })
     return response.data

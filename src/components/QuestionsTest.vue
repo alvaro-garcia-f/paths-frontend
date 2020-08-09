@@ -24,7 +24,7 @@
                 <h1>You have finished the quiz!</h1><br/>
                 <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
                 <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
-                <v-btn>Log</v-btn>
+                <v-btn class="mt-5" :to="redirectTo()">{{ getButtonMessage() }}</v-btn>
               </v-col>
             </v-row>
           </v-card-text>
@@ -102,6 +102,7 @@
 import Users from '@/services/userService'
 import Questions from '@/services/questionService'
 import Results from '@/services/resultsService'
+import Lessons from '@/services/lessonService'
 
 export default {
   name: 'QuestionsTest',
@@ -131,6 +132,7 @@ export default {
       }
       return 'Maybe next lesson is still too advanced. You should read this lesson again.'
     },
+
     answerQuestion (answer) {
       const data = {
         lesson: this.id,
@@ -175,6 +177,26 @@ export default {
           })
           .catch(err => console.error(err))
       }
+    },
+
+    getButtonMessage () {
+      if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
+        return 'Read Next Lesson'
+      }
+      return 'Revise This Lesson'
+    },
+
+    redirectTo () {
+      if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
+        const thisLesson = this.questionsList[0].lesson
+        Lessons
+          .getNextLesson(thisLesson)
+          .then(next => {
+            return { name: 'Lesson', params: { id: next._id } }
+          })
+          .catch(err => console.error(err))
+      }
+      return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
     }
   },
   mounted () {
