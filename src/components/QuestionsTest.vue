@@ -188,10 +188,12 @@ export default {
     },
 
     redirectTo () {
-      if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
-        return this.nextLesson
-      } else {
-        return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
+      if (this.questionsList[0]) {
+        if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
+          return this.nextLesson
+        } else {
+          return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
+        }
       }
     }
   },
