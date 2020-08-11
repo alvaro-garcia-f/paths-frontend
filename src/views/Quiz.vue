@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <QuestionsList :id="id" v-if="teacher"></QuestionsList>
-    <QuestionsTest :id="id" v-else></QuestionsTest>
+    <QuestionsTest :id="id" :type="type" v-else></QuestionsTest>
   </v-container>
 </template>
 
@@ -21,7 +21,8 @@ export default {
     QuestionsTest
   },
   props: {
-    id: String
+    id: String,
+    type: String
   }
 }
 </script>

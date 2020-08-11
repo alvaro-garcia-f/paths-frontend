@@ -119,8 +119,7 @@ export default {
     }
   },
   props: {
-    id: String,
-    type: String
+    id: String
   },
 
   methods: {
@@ -214,9 +213,9 @@ export default {
     },
 
     getNewInterval (oldInterval, ef) {
-      if (oldInterval === 0) return 2
-      if (oldInterval === 1) return 6
-      if (oldInterval > 1) return Math.floor(oldInterval * ef)
+      if (oldInterval === 1) return 2
+      if (oldInterval === 2) return 6
+      if (oldInterval > 2) return Math.floor(oldInterval * ef)
     },
 
     restartInterval () {
@@ -260,34 +259,20 @@ export default {
     }
   },
   mounted () {
-    if (this.type === 'quiz') {
-      Questions
-        .getAllQuestions(this.id)
-        .then(response => {
-          this.questionsList = response
-          this.time = Date.now()
+    Questions
+      .getAllQuestions(this.id)
+      .then(response => {
+        this.questionsList = response
+        this.time = Date.now()
 
-          Lessons
-            .getNextLesson(response[0].lesson)
-            .then(next => {
-              this.nextLesson = { name: 'Lesson', params: { id: next[0]._id } }
-            })
-            .catch(err => console.error(err))
-        })
-        .catch(err => console.error(err))
-    }
-
-    if (this.type === 'training') {
-      Practice
-        .getAllIntervals()
-        .then(intervals => {
-          intervals.forEach(interval => {
-            this.questionsList.push(interval.question)
+        Lessons
+          .getNextLesson(response[0].lesson)
+          .then(next => {
+            this.nextLesson = { name: 'Lesson', params: { id: next[0]._id } }
           })
-          this.time = Date.now()
-        })
-        .catch(err => console.error(err))
-    }
+          .catch(err => console.error(err))
+      })
+      .catch(err => console.error(err))
   }
 }
 </script>

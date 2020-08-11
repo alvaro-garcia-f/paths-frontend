@@ -22,7 +22,7 @@
             Strengthen your knowledge.
           </v-card-text>
           <v-card-actions class="card-actions">
-            <v-btn  color="amber darken-2" class="white--text">Start Test</v-btn>
+            <v-btn  color="amber darken-2" class="white--text" :to="{ name: 'Quiz', params: { type: 'training' } }">Start Test</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

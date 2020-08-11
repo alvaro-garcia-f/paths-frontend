@@ -7,6 +7,11 @@ const API = axios.create({
 
 export default {
 
+  async getAllIntervals (id) {
+    const response = await API.get('/', { headers: { token: localStorage.getItem('token') } })
+    return response.data
+  },
+
   async getQuestionInterval (id) {
     const response = await API.get(`/question/${id}`, { headers: { token: localStorage.getItem('token') } })
     return response.data

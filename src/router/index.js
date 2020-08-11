@@ -28,11 +28,12 @@ const routes = [
     })
   },
   {
-    path: '/lesson/:id/quiz',
+    path: '/lesson/:id/quiz/:type',
     name: 'Quiz',
     component: Quiz,
     props: (route) => ({
-      id: route.params.id
+      id: route.params.id,
+      type: route.params.type
     })
   },
   {
