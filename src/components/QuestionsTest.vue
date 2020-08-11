@@ -103,6 +103,7 @@ import Users from '@/services/userService'
 import Questions from '@/services/questionService'
 import Results from '@/services/resultsService'
 import Lessons from '@/services/lessonService'
+import Practice from '@/services/practiceService'
 
 export default {
   name: 'QuestionsTest',
@@ -113,7 +114,8 @@ export default {
       correctAnswers: 0,
       correct: false,
       wrong: false,
-      nextLesson: {}
+      nextLesson: {},
+      time: 0
     }
   },
   props: {
@@ -144,10 +146,14 @@ export default {
         this.correct = true
         data.correct = true
         this.correctAnswers++
+        this.time = Date.now() - this.time
+        this.updateInterval()
       } else {
         this.wrong = true
         data.correct = false
+        this.restartInterval()
       }
+      this.time = Date.now()
 
       Results
         .addAnswer(data)
@@ -180,6 +186,7 @@ export default {
       }
     },
 
+    // Redirection on Quiz end
     getButtonMessage () {
       if (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75) {
         return 'Read Next Lesson'
@@ -195,6 +202,61 @@ export default {
           return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
         }
       }
+    },
+
+    // SuperMemo data
+    getResponseQuality () {
+      const responseTime = this.time / 1000
+      console.log(responseTime)
+      if (responseTime >= 30) return 3
+      if (responseTime > 15 && responseTime < 30) return 4
+      return 5
+    },
+
+    getNewInterval (oldInterval, ef) {
+      if (oldInterval === 1) return 2
+      if (oldInterval === 2) return 6
+      if (oldInterval > 2) return Math.floor(oldInterval * ef)
+    },
+
+    restartInterval () {
+      const data = {
+        interval: 1,
+        repetitions: 1,
+        ef: 2.5
+      }
+
+      Practice
+        .updateQuestionInterval(this.questionsList[this.currentQuestion]._id, data)
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+    },
+
+    updateInterval (quality) {
+      const data = {
+        interval: 1,
+        repetitions: 1,
+        ef: 2.5
+      }
+      Practice
+        .getQuestionInterval(this.questionsList[this.currentQuestion]._id)
+        .then(interval => {
+          if (interval.length > 0) {
+            data.repetitions = interval[0].repetitions + 1
+            data.interval = this.getNewInterval(interval[0].interval, interval[0].ef)
+
+            const q = this.getResponseQuality()
+            const eFactor = interval[0].ef - 0.8 + 0.28 * q - 0.02 * q * q
+
+            if (eFactor < 1.3) data.ef = 1.3
+            else data.ef = eFactor
+          }
+          Practice
+            .updateQuestionInterval(this.questionsList[this.currentQuestion]._id, data)
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
+        })
+        .catch(err => console.error(err))
     }
   },
   mounted () {
@@ -202,6 +264,7 @@ export default {
       .getAllQuestions(this.id)
       .then(response => {
         this.questionsList = response
+        this.time = Date.now()
 
         Lessons
           .getNextLesson(response[0].lesson)

@@ -4,6 +4,7 @@
       <v-tabs-slider></v-tabs-slider>
       <v-tab href="#lessons">Lessons</v-tab>
       <v-tab href="#students" v-if="teacher">Students</v-tab>
+      <v-tab href="#practice" v-else>Practice</v-tab>
 
       <v-tab-item value="lessons">
         <LessonsList></LessonsList>
@@ -11,6 +12,10 @@
 
       <v-tab-item value="students">
         <StudentsList></StudentsList>
+      </v-tab-item>
+
+      <v-tab-item value="practice">
+        <PracticeList></PracticeList>
       </v-tab-item>
     </v-tabs>
 
@@ -20,6 +25,7 @@
 <script>
 import LessonsList from '@/components/LessonsList.vue'
 import StudentsList from '@/components/StudentsList.vue'
+import PracticeList from '@/components/PracticeList.vue'
 
 export default {
   name: 'Main',
@@ -30,7 +36,8 @@ export default {
   },
   components: {
     LessonsList,
-    StudentsList
+    StudentsList,
+    PracticeList
   },
   methods: {
     getActiveTab () {

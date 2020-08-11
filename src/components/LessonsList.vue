@@ -118,7 +118,7 @@
             {{ lesson.description}}
           </v-card-text>
           <v-card-actions class="card-actions">
-            <v-btn  color="yellow darken-2" class="white--text" :to="{ name: 'Quiz', params: { id: lesson._id } }">Quiz</v-btn>
+            <v-btn  color="amber darken-2" class="white--text" :to="{ name: 'Quiz', params: { id: lesson._id } }">Quiz</v-btn>
             <v-btn  color="blue" class="white--text" :to="{ name: 'Lesson', params: { id: lesson._id } }">View Lesson</v-btn>
           </v-card-actions>
         </v-card>
