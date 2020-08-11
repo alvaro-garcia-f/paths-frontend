@@ -157,7 +157,7 @@ export default {
 
       Results
         .addAnswer(data)
-        .then(() => {
+        .then(response => {
           this.$root.$emit('dataChange', 'Question answered')
         })
         .catch(err => console.error(err))
@@ -207,7 +207,6 @@ export default {
     // SuperMemo data
     getResponseQuality () {
       const responseTime = this.time / 1000
-      console.log(responseTime)
       if (responseTime >= 30) return 3
       if (responseTime > 15 && responseTime < 30) return 4
       return 5

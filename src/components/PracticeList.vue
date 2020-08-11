@@ -32,7 +32,10 @@
 
 <script>
 export default {
-
+  name: 'PracticeList',
+  mounted () {
+    sessionStorage.setItem('tab', 'practice')
+  }
 }
 </script>
 

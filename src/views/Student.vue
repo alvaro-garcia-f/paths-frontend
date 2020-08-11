@@ -69,6 +69,7 @@ import Lessons from '@/services/lessonService'
 import Results from '@/services/resultsService'
 
 export default {
+  name: 'Student',
   data () {
     return {
       student: {},
