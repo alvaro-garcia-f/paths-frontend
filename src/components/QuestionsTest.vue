@@ -24,7 +24,7 @@
                 <h1>You have finished the quiz!</h1><br/>
                 <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
                 <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
-                <v-btn class="mt-5" :to="redirectTo()">{{ getButtonMessage() }}</v-btn>
+                <v-btn class="mt-5" :to="redirectTo()" v-if="type && type !== 'training'">{{ getButtonMessage() }}</v-btn>
               </v-col>
             </v-row>
           </v-card-text>
@@ -214,15 +214,16 @@ export default {
     },
 
     getNewInterval (oldInterval, ef) {
-      if (oldInterval === 0) return 2
+      if (oldInterval === 0) return 1
       if (oldInterval === 1) return 6
       if (oldInterval > 1) return Math.floor(oldInterval * ef)
     },
 
     restartInterval () {
       const data = {
-        interval: 1,
-        repetitions: 1,
+        next: Date.now(),
+        interval: 0,
+        repetitions: 0,
         ef: 2.5
       }
 
@@ -233,24 +234,29 @@ export default {
     },
 
     updateInterval (quality) {
+      const msecPerDay = 24 * 60 * 60 * 1000
       const data = {
+        next: Date.now() + msecPerDay,
         interval: 1,
         repetitions: 1,
         ef: 2.5
       }
+
       Practice
         .getQuestionInterval(this.questionsList[this.currentQuestion]._id)
         .then(interval => {
           if (interval.length > 0) {
             data.repetitions = interval[0].repetitions + 1
-            data.interval = this.getNewInterval(interval[0].interval, interval[0].ef)
-
             const q = this.getResponseQuality()
             const eFactor = interval[0].ef - 0.8 + 0.28 * q - 0.02 * q * q
 
             if (eFactor < 1.3) data.ef = 1.3
             else data.ef = eFactor
+
+            data.interval = this.getNewInterval(interval[0].interval, data.ef)
+            data.next = Date.now() + (data.interval * msecPerDay)
           }
+
           Practice
             .updateQuestionInterval(this.questionsList[this.currentQuestion]._id, data)
             .then(response => console.log(response))

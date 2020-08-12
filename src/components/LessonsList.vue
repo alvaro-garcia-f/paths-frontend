@@ -230,7 +230,6 @@ export default {
 
     updateOrder () {
       const data = this.lessonList.map(lesson => lesson._id)
-
       Lessons
         .updateOrder(data)
         .then(list => {
