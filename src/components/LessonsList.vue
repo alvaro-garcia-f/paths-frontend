@@ -124,6 +124,17 @@
         </v-card>
       </v-col>
     </v-row>
+
+     <v-snackbar v-model="snackbar" bottom timeout="3000">
+
+      Order updated
+
+      <template v-slot:action="{ attrs }">
+        <v-btn dark class="blue--text" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -155,7 +166,8 @@ export default {
       lessonTitles: [],
       lessonIds: [],
       teacher: localStorage.getItem('role') === 'teacher',
-      completedLessons: []
+      completedLessons: [],
+      snackbar: false
     }
   },
   components: {
@@ -234,6 +246,7 @@ export default {
         .updateOrder(data)
         .then(list => {
           this.lessonList = list
+          this.snackbar = true
         })
     },
 
