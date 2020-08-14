@@ -40,7 +40,7 @@
 
     <v-row class="mt-0 px-sm-12" justify="center" align="center" v-if="isQuizDone()">
       <v-col>
-        <v-card height="70vh" class="success">
+        <v-card height="70vh" class="success" v-if="type && type !== 'training'">
           <v-card-title>
             <v-row style="height:20%">
               <v-spacer></v-spacer>
@@ -54,13 +54,34 @@
           <v-card-text class="text-center white--text pt-0" style="height: 55%">
             <v-row align="center" style="height: 100%">
               <v-col>
-                <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
+                <h2> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right.</h2><br/>
                 <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
-                <v-btn class="mt-5" :to="redirectTo()" v-if="type && type !== 'training'">{{ getButtonMessage() }}</v-btn>
+                <v-btn class="mt-5" :to="redirectTo()">{{ getButtonMessage() }}</v-btn>
               </v-col>
             </v-row>
           </v-card-text>
         </v-card>
+
+        <v-card height="70vh" color="amber darken-3" v-else>
+          <v-card-title>
+            <v-row style="height:20%">
+              <v-spacer></v-spacer>
+              <v-col cols="7" sm="3">
+                <v-img class="text-center" :src="require('../assets/cards/practice1.svg')"></v-img>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
+          </v-card-title>
+          <v-card-text class="text-center white--text pt-0" style="height: 25%">
+            <v-row align="center" style="height: 100%">
+              <v-col>
+                <h2> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right.</h2><br/>
+                <h3> Not bad! Don't forget to keep on training: Practice makes perfection!!</h3><br/>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+
       </v-col>
     </v-row>
 
