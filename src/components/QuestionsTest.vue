@@ -1,5 +1,6 @@
 <template>
   <v-container fill-height fluid>
+
     <v-row class="align-center">
       <v-col cols="1" class="text-right">
         <router-link style="text-decoration: none" to="/main">
@@ -15,13 +16,44 @@
       <v-divider></v-divider>
     </v-row>
 
-    <v-row class="mt-5" justify="center" align="center" v-if="isQuizDone()">
+    <v-row  class="px-sm-12" >
       <v-col>
-        <v-card height="60vh" class="success">
-          <v-card-text class="text-center white--text" style="height: 100%">
+        <v-stepper v-model="currentQuestion">
+          <v-stepper-header>
+            <template v-for="(n, idx) in questionsList">
+              <v-stepper-step
+                :key="`${idx + 1}-step`"
+                :complete="currentQuestion > idx"
+                :step="idx + 1"
+              >
+              </v-stepper-step>
+
+              <v-divider
+                v-if="idx !== questionsList.length - 1"
+                :key="idx"
+              ></v-divider>
+            </template>
+          </v-stepper-header>
+        </v-stepper>
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-0 px-sm-12" justify="center" align="center" v-if="isQuizDone()">
+      <v-col>
+        <v-card height="70vh" class="success">
+          <v-card-title>
+            <v-row style="height:20%">
+              <v-spacer></v-spacer>
+              <v-col cols="7" sm="3">
+                <v-img class="text-center" :src="require('../assets/cards/next.svg')" v-if="testPassed()"></v-img>
+                <v-img class="text-center" :src="require('../assets/cards/revise.svg')" v-else></v-img>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
+          </v-card-title>
+          <v-card-text class="text-center white--text pt-0" style="height: 55%">
             <v-row align="center" style="height: 100%">
               <v-col>
-                <h1>You have finished the quiz!</h1><br/>
                 <h3> You got {{ correctAnswers }} out of {{ questionsList.length }} questions right</h3><br/>
                 <h3> {{ returnFeedback(correctAnswers, questionsList.length) }}</h3><br/>
                 <v-btn class="mt-5" :to="redirectTo()" v-if="type && type !== 'training'">{{ getButtonMessage() }}</v-btn>
@@ -32,7 +64,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="mt-2" v-else>
+    <v-row class="mt-2 px-sm-12" v-else>
 
       <v-dialog width="50vw" :value="correct" absolute @click:outside="nextQuestion()">
         <v-card height="50vh" class="success card-outter">
@@ -43,7 +75,7 @@
       </v-dialog>
 
       <v-dialog width="50vw" :value="wrong" absolute @click:outside="nextQuestion()">
-        <v-card height="50vh" class="warning card-outter">
+        <v-card height="50vh" class="info card-outter">
           <v-card-text height="100%" class="text-center white--text card-text">
             <h2> I'm sorry but that is wrong</h2><br/>
             <h3>The correct answer is: {{ showAnswer(questionsList[currentQuestion].answer) }}</h3>
@@ -53,7 +85,7 @@
 
       <v-col cols="12">
         <v-card class="py-6 question">
-          <v-card-text class="text-center">
+          <v-card-text class="text-center blue--text text--darken-2">
             <h2>{{ questionsList[currentQuestion].question }}</h2>
           </v-card-text>
         </v-card>
@@ -202,6 +234,12 @@ export default {
         } else {
           return { name: 'Lesson', params: { id: this.questionsList[0].lesson } }
         }
+      }
+    },
+
+    testPassed () {
+      if (this.questionsList[0]) {
+        return (Math.floor(this.correctAnswers * 100 / this.questionsList.length) >= 75)
       }
     },
 
